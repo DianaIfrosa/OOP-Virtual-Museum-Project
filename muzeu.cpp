@@ -35,6 +35,7 @@ void muzeu::AfiseazaPersonal()
                 cout << ", " << iter->second[i];
             cout << "\n";
         }
+
     }
 }
 
