@@ -1,7 +1,3 @@
-//
-// Created by Diana on 11.03.2021.
-//
-
 #include "muzeu.h"
 #include <iostream>
 
@@ -38,4 +34,10 @@ void muzeu::AfiseazaPersonal()
 
     }
 }
+int muzeu::PretZi(int nr_zi_saptamana){
+
+    //returneaza pretul din ziua specificata
+    return pret_zile[nr_zi_saptamana];
+}
+
 

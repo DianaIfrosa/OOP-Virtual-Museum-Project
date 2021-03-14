@@ -4,6 +4,6 @@ project(Laborator_POO)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(Laborator_POO
-        main.cpp muzeu.cpp muzeu.h)
+        main.cpp muzeu.cpp muzeu.h client.cpp client.h sala.cpp sala.h)
 
 
