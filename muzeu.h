@@ -13,7 +13,7 @@ class muzeu {
     char nume[30];
     string ore_vizitare[7]; // la fiecare pozitie (zi a sapt)
     //e interval orar de genul 11-18 sau - daca nu se poate vizita in acea zi
-    string locatie;
+    string adresa;
     int pret_zile[7];
     int scor[10]; //fiecare sala are un punctaj rezultat din recenzii
     int nr_sali;
@@ -28,6 +28,8 @@ public:
     int  PretZi(int nr_zi_saptamana);
 
     friend class client;
+//overload >>
+    friend istream &operator >> (istream &fin, muzeu &M);
 
 };
 

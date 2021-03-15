@@ -30,6 +30,8 @@ public:
     //getteri
     bool Stare();
 
+    //overload <<
+    friend ostream &operator << (ostream &cout, const sala &S);
 
 };
 

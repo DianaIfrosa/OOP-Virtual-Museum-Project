@@ -23,12 +23,12 @@ void muzeu::AfiseazaPersonal()
         if (dimensiune==0)
             cout<<"0 membri\n";
        else if(dimensiune==1)
-        {cout<<"1 membru: ";  cout << iter->second[0] ; cout<<"\n";}
+        {cout<<"1 membru:";  cout << iter->second[0] ; cout<<"\n";}
         if(dimensiune>1) {
-            cout<<dimensiune<<" membri: ";
+            cout<<dimensiune<<" membri:";
             cout << iter->second[0] ;
             for (int i = 1; i <dimensiune; i++)
-                cout << ", " << iter->second[i];
+                cout << "," << iter->second[i];
             cout << "\n";
         }
 
@@ -38,6 +38,16 @@ int muzeu::PretZi(int nr_zi_saptamana){
 
     //returneaza pretul din ziua specificata
     return pret_zile[nr_zi_saptamana];
+}
+
+istream &operator >> (istream &fin, muzeu &M){
+fin>>M.nume;
+getline(fin, M.adresa);
+for(int i=0;i<7;i++)
+    fin>>M.ore_vizitare[i];
+fin>>M.nr_sali;
+
+return fin;
 }
 
 

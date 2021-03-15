@@ -1,15 +1,15 @@
 #include "client.h"
-//#include <cv.h>
-//#include <highgui.h>
+//#include <opencv2/core/core.hpp>
+//#include <opencv2/highgui/highgui.hpp>
+#include <iostream>
 
-
+//using namespace cv;
 using namespace std;
-
 
 void client::IncepeTur(){
 //    Mat imagine = imread("poza_muzeu.jpg", CV_LOAD_IMAGE_COLOR);
-//    namedWindow("image");
-//    imshow("image", imagine);
+//    namedWindow("display window");
+//    imshow("display window", imagine);
 //    waitKey(0);
 //    for(int i=0;i<6;i++)
 //        if(S[i].Stare()==1) //daca sala e deschisa
@@ -17,6 +17,7 @@ void client::IncepeTur(){
 
 }
 void client::AdaugaLaPreferinte() {
+    //de facut
 
 }
 int client::Tip() {

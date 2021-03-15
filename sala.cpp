@@ -38,14 +38,14 @@ sala sala::operator=(const sala &s){
 
 //constructor
 sala ::sala(string nume, int etaj){
-nr_exponate=0;
-this->etaj=etaj;
-exponate=new string[7];
-date_exponate=new string[7];
-preturi_exponate= new int[7];
-this->nume_sala=nume;
-this->stare=1; //implicit sala deschisa
-//cout<<"constructor ";
+    nr_exponate=0;
+    this->etaj=etaj;
+    exponate=new string[7];
+    date_exponate=new string[7];
+    preturi_exponate= new int[7];
+    this->nume_sala=nume;
+    this->stare=1; //implicit sala deschisa
+    //cout<<"constructor ";
 
 }
 
@@ -70,5 +70,9 @@ sala ::sala (const sala &s) {
         date_exponate[i] = s.date_exponate[i];
         preturi_exponate[i] = s.preturi_exponate[i];
     }
+}
+ostream &operator << (ostream &cout,const sala &S){
+    cout<<"Sala cu numele " <<S.nume_sala<<" are "<<S.nr_exponate<<" exponate";
+
 }
 
