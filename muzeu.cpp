@@ -1,5 +1,6 @@
-#include "muzeu.h"
 #include <iostream>
+#include "muzeu.h"
+
 
 void muzeu::AdaugaDepartament(string departament)
 {
@@ -40,14 +41,33 @@ int muzeu::PretZi(int nr_zi_saptamana){
     return pret_zile[nr_zi_saptamana];
 }
 
-istream &operator >> (istream &fin, muzeu &M){
-fin>>M.nume;
-getline(fin, M.adresa);
-for(int i=0;i<7;i++)
-    fin>>M.ore_vizitare[i];
-fin>>M.nr_sali;
+istream &operator >> (istream &in, muzeu &M){
 
-return fin;
+in>>M.nume;
+getline(in, M.adresa);
+for(int i=0;i<7;i++)
+    in>>M.ore_vizitare[i];
+in>>M.nr_sali;
+for(int i=0;i<7;i++)
+    in>>M.pret_zile[i];
+
+return in;
+}
+ostream &operator <<(ostream &out, const muzeu &M){
+
+    //detalii despre muzeu
+    out<<"Bine ati venit la "<<M.nume<<" situat la adresa "<<M.adresa<<"\n";
+    out<<"Programul de vizitare si preturile aferente:\n";
+    string zile_sapt[7]={"Luni", "Marti", "Miercuri", "Joi", "Vineri", "Sambata", "Duminica"};
+    for(int i=0;i<7;i++) {
+        out << zile_sapt[i] << ": " << M.ore_vizitare[i] ;
+        if (M.ore_vizitare[i] != "-")
+            out<< ", "<<M.pret_zile[i]<<" lei";
+
+        out<<"\n";
+
+    }
+  return out;
 }
 
 

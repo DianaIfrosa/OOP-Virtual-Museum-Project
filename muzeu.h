@@ -3,13 +3,12 @@
 #include <vector>
 #include <string>
 #include <map>
-#define NRMAXSALI 7
+const int NRMAXSALI=7;
 
 using namespace std;
 
 class muzeu {
 
-    //date din fisier sau la initializare?
     char nume[30];
     string ore_vizitare[7]; // la fiecare pozitie (zi a sapt)
     //e interval orar de genul 11-18 sau - daca nu se poate vizita in acea zi
@@ -27,9 +26,12 @@ public:
     void AdaugaDepartament(string);
     int  PretZi(int nr_zi_saptamana);
 
+    //overload >>
+    friend istream &operator >> (istream &in, muzeu &M);
+    //overload <<
+    friend ostream &operator <<(ostream &out, const muzeu &M);
+
     friend class client;
-//overload >>
-    friend istream &operator >> (istream &fin, muzeu &M);
 
 };
 

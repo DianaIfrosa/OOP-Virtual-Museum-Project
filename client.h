@@ -12,15 +12,12 @@ class client {
     //constructor
 public:
     //constructor
-    client(string nume, string prenume, int tip=1) {
-        this->nume=nume;
-        this->prenume=prenume;
-        this->tip=tip;
-
-    }
+    client(string nume="-", string prenume="-", int tip=1);
     void IncepeTur();
     void AdaugaLaPreferinte();
     int Tip();
+    friend ostream &operator<<(ostream &out, const client &C);
+    friend istream &operator>>(istream &in, client &C);
     friend class sala;
 };
 

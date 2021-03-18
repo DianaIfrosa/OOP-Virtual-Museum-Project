@@ -1,0 +1,12 @@
+BoxOffice 0
+Paintings 1
+ArchitecturalModels 1
+Sculptures 2
+Room5 2
+Feedback-Exit 1
+1 Painting1 10-09-2003 3000
+1 Painting2 04-08-2010 59000
+1 Painting3 01-12-2006 7600
+2 Model1 12-01-1999 900
+2 Model2 12-01-1999 8000
+

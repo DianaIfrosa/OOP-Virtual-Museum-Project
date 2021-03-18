@@ -1,6 +1,6 @@
-#include "sala.h"
 #include <string>
 #include <iostream>
+#include "sala.h"
 using namespace std;
 
 void sala::AdaugaExponat(string nume_exponate, string data_aducerii, int pret){
@@ -53,6 +53,7 @@ sala ::sala(string nume, int etaj){
 sala ::~sala(){
     delete []exponate;
     delete []date_exponate;
+    delete []preturi_exponate;
     //cout<<"destructor ";
 }
 
@@ -71,8 +72,13 @@ sala ::sala (const sala &s) {
         preturi_exponate[i] = s.preturi_exponate[i];
     }
 }
-ostream &operator << (ostream &cout,const sala &S){
-    cout<<"Sala cu numele " <<S.nume_sala<<" are "<<S.nr_exponate<<" exponate";
+ostream &operator << (ostream &out,const sala &S){
+    out<<"Sala cu numele " <<S.nume_sala<<" are "<<S.nr_exponate<<" exponate\n";
+    return out;
+}
+istream &operator >> (istream &in, sala &S){
 
+    in>>S.nume_sala>>S.etaj;
+    return in;
 }
 

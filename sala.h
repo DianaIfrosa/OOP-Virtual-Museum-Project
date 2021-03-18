@@ -15,7 +15,7 @@ class sala {
 
 public:
     //constructor
-    sala(string nume, int etaj);
+    sala(string nume="-", int etaj=0);
     //destructor
     ~sala();
     //constructor de copiere
@@ -31,7 +31,8 @@ public:
     bool Stare();
 
     //overload <<
-    friend ostream &operator << (ostream &cout, const sala &S);
+    friend ostream &operator << (ostream &out, const sala &S);
+    friend istream &operator >> (istream &in, sala &S);
 
 };
 

@@ -23,4 +23,20 @@ void client::AdaugaLaPreferinte() {
 int client::Tip() {
     return tip;
 }
+client ::client(string nume, string prenume, int tip) {
+this->nume=nume;
+this->prenume=prenume;
+this->tip=tip;
+
+}
+ostream &operator << (ostream &out, const client &C){
+    out<<"Clientul "<<C.nume<<" "<<C.prenume<<" este de tipul "<<C.tip<<"\n";
+    return out;
+}
+istream &operator >> (istream &in, client &C){
+    cout<<"Introduceti numele si prenumele: ";
+    in>>C.nume>>C.prenume;
+    return in;
+
+}
 
