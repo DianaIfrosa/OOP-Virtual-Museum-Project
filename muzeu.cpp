@@ -184,7 +184,6 @@ void muzeu::StartTour(sala S[]){
      }
  }
 
-
 }
 void muzeu::FeedbackScore() {
 
