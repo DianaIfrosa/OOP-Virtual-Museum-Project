@@ -1,14 +1,15 @@
 #include <string>
 #include <iostream>
+
 #include "sala.h"
 using namespace std;
 
 void sala::AdaugaExponat(string nume_exponate, string data_aducerii, int pret){
 
-  exponate[nr_exponate]=nume_exponate;
-  date_exponate[nr_exponate]=data_aducerii;
-  preturi_exponate[nr_exponate]=pret;
-  nr_exponate++;
+    exponate[nr_exponate]=nume_exponate;
+    date_exponate[nr_exponate]=data_aducerii;
+    preturi_exponate[nr_exponate]=pret;
+    nr_exponate++;
 
 }
 void sala::DeschideSala() {

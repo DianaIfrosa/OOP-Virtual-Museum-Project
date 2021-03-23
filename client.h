@@ -7,18 +7,17 @@ using namespace std;
 class client {
 
     string nume, prenume;
-    int tip; //1- normal, 2-fidel, 3-VIP =>se acorda reduceri in functie de tip; 1->0%, 2->20%, 3->50% reduceri
+    string tip; //1- adult, 2-student, 3-child =>se acorda reduceri in functie de tip; adult->0%, 2->20%, 3->50%
 
-    //constructor
 public:
     //constructor
-    client(string nume="-", string prenume="-", int tip=1);
-    void IncepeTur();
-    void AdaugaLaPreferinte();
+    client(string nume="-", string prenume="-", string tip="-");
+    void Feedback();
     int Tip();
     friend ostream &operator<<(ostream &out, const client &C);
     friend istream &operator>>(istream &in, client &C);
     friend class sala;
+
 };
 
 

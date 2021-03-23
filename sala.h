@@ -3,14 +3,14 @@
 #include <string>
 #include <iostream>
 using namespace std;
-
+class muzeu;
 class sala {
 
     int nr_exponate,etaj;
     string nume_sala;
     string *exponate; //numele obiectului expus
     string *date_exponate; //de la ce data se afla in muzeu
-    bool stare; //deschisa sau inchisa-  ex: renovare
+    bool stare; //deschisa sau inchisa-  ex: renovare (inchisa=0 , deschisa=1)
     int *preturi_exponate; //cu ce suma a fost cumparat
 
 public:
@@ -33,6 +33,8 @@ public:
     //overload <<
     friend ostream &operator << (ostream &out, const sala &S);
     friend istream &operator >> (istream &in, sala &S);
+    friend class muzeu;
+    friend void ReadRoomsData( sala S[]);
 
 };
 

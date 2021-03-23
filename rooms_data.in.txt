@@ -1,12 +1,22 @@
+6
 BoxOffice 0
 Paintings 1
 ArchitecturalModels 1
 Sculptures 2
-Room5 2
+VintageFashion 2
 Feedback-Exit 1
 1 Painting1 10-09-2003 3000
 1 Painting2 04-08-2010 59000
 1 Painting3 01-12-2006 7600
 2 Model1 12-01-1999 900
 2 Model2 12-01-1999 8000
+3 Sculpture1 09-05-2005 7000
+3 Sculpture2 02-05-2003 6000
+4 VintageDress 08-06-1999 79000
+4 RoyalDress 09-07-1999 430000
+4 ManCostume 02-09-1998 56000
+0 Hall - 0
+5 ExitHall - 0
+
+
 
