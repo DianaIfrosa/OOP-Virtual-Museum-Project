@@ -15,7 +15,8 @@ const int v0=49;
 const int v1=52;
 const int v2=49;
 const int waiting_time=3000;
-
+const string generalpath="C:\\Users\\Diana\\Desktop\\poza";
+const string closedroom_path="C:\\Users\\Diana\\Desktop\\pozaclosed.jpg";
 using namespace std;
 using namespace cv;
 
@@ -104,10 +105,10 @@ void muzeu::ShowRoom(const int nrsala, sala S[]) {
     int i;
     if (S[nrsala].stare == 0)
     {//daca sala e inchisa
-    DisplayImage("C:\\Users\\Diana\\Desktop\\pozaclosed.jpg","Sorry for the inconvenience!");
+    DisplayImage(closedroom_path,"Sorry for the inconvenience!");
     return;
     }
-    string src="C:\\Users\\Diana\\Desktop\\poza";
+    string src=generalpath;
 
     for(i=1;i<=S[nrsala].nr_exponate;i++) //iau fiecare exponat
     {
