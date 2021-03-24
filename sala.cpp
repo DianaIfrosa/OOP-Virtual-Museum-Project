@@ -74,7 +74,7 @@ sala ::sala (const sala &s) {
     }
 }
 ostream &operator << (ostream &out,const sala &S){
-    out<<"Sala cu numele " <<S.nume_sala<<" are "<<S.nr_exponate<<" exponate\n";
+    out<<"The room named " <<S.nume_sala<<" has "<<S.nr_exponate<<" exhibit(s) and is on floor "<<S.etaj<<".\n";
     return out;
 }
 istream &operator >> (istream &in, sala &S){

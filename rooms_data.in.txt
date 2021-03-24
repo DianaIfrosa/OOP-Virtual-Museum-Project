@@ -1,5 +1,5 @@
 6
-BoxOffice 0
+CashDesk 0
 Paintings 1
 ArchitecturalModels 1
 Sculptures 2

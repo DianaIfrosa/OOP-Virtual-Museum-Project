@@ -98,7 +98,6 @@ bool ButtonTour()
 
     }
 
-
 }
 int CurrentDay()
 {
@@ -123,10 +122,11 @@ int main()
     //afiseaza date relevante despre muzeu
      MuseumIntroduction(M);
 
-    ///Metode disponibile si relevante pentru obiectul muzeu:
+    ///Metode disponibile si relevante pentru obiectul muzeu (celelalte se apeleaza in cadrul turului):
 //    void AdaugaPersonal(string departament,string nume);
 //    void AfiseazaPersonal();
 //    void AdaugaDepartament(string departament);
+///    void StartTour(sala S[]);
 //     void FeedbackScore(); //afiseaza feedback score bazat pe fisierul in care se retin
 //     notele (si numele/prenumele) date de utilizator (client)
 
@@ -134,10 +134,15 @@ int main()
 //    void AdaugaExponat(string nume_exponate, string data_aducerii, int pret);
 //    void DeschideSala();
 //    void InchideSala(); //are consecinte la "rularea" turului-> va afisa o atentionare cu camera-inchisa
+//    bool Stare(); //afla disponibilitatea unei camere
 
 ///Adaugarea unui exponat se poate face manual cu metoda de mai sus (si scriind ulterior datele tot manual in rooms_data.in.txt), fie
 ///adaugand direct datele (nr_sala nume_exponat data_aducerii pret_cumparare) in fisierul rooms_data.in.txt
 ///iar mai apoi prin apelarea functiei ReadRoomsData(S);
+
+    ///Metode disponibile si relevante pentru obiectul client
+//  void Feedback(); //ofera feedback la finalul turului, care va fi luat in calcul la feedback score al muzeului
+//  int Tip(); //se poate afla din ce categorie face parte (student, adult, child)
 
   //incepe tur sau nu
     bool command= ButtonTour();

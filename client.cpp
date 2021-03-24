@@ -11,7 +11,7 @@ int client::Tip() {
         return 1;
     else if (tip=="student")
         return 2;
-    else return 3;
+    else return 3; //child
 }
 client ::client(string nume, string prenume, string tip) {
     //constructor
@@ -21,7 +21,7 @@ this->tip=tip;
 
 }
 ostream &operator << (ostream &out, const client &C){
-    out<<"Clientul "<<C.nume<<" "<<C.prenume<<" este de tipul "<<C.tip<<"\n";
+    out<<"Name of client: "<<C.nume<<" "<<C.prenume<<". Category: "<<C.tip<<"\n";
     return out;
 }
 istream &operator >> (istream &in, client &C){
