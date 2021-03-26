@@ -126,9 +126,9 @@ int main()
 //    void AdaugaPersonal(string departament,string nume);
 //    void AfiseazaPersonal();
 //    void AdaugaDepartament(string departament);
-///    void StartTour(sala S[]);
-//     void FeedbackScore(); //afiseaza feedback score bazat pe fisierul in care se retin
-//     notele (si numele/prenumele) date de utilizator (client)
+///   void StartTour(sala S[]);
+//    void FeedbackScore(); //afiseaza feedback score bazat pe fisierul in care se retin
+//    notele (si numele/prenumele) date de utilizator (client)
 
     ///Metode disponibile si relevante pentru obiectul sala
 //    void AdaugaExponat(string nume_exponate, string data_aducerii, int pret);
@@ -168,6 +168,7 @@ int main()
 
     cout<<"Our feedback score is:\n";
     M.FeedbackScore();
+
 
    return 0;
 

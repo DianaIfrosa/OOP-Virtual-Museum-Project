@@ -3,7 +3,7 @@
 #include "sala.h"
 #include <vector>
 #include <string>
-#include <map>
+#include <unordered_map>
 const int NRMAXSALI=7;
 const int MAX_LENGTH_NAME=30;
 using namespace std;
@@ -17,7 +17,7 @@ class muzeu {
     int pret_zile[7];
     double feedback_score;
     //map cu nume personal; departament: nume; numele sunt retinute in vector de stringuri
-     map <string, vector<string> > nume_personal;
+    unordered_map<string, vector<string> > nume_personal;
     int nr_sali;
 
 public:

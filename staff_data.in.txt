@@ -1,14 +1,14 @@
 5
-Curatenie
-Paza
+Cleaning
+Security
 Management
-Ghid
-Casierie
+Guide
+CashDesk
 7
-Paza Alexander Hunold
-Paza Lex De Haan
+Security Alexander Hunold
+Security Lex De Haan
 Management Daniel Faviet
-Casierie Lisa Ozer
-Curatenie Nandita Sarchand
-Curatenie Curtis Davies
-Ghid Louise Doran
+CashDesk Lisa Ozer
+Cleaning Nandita Sarchand
+Cleaning Curtis Davies
+Guide Louise Doran

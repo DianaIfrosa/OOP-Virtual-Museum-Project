@@ -1,5 +1,4 @@
 #include "muzeu.h"
-#include "sala.h"
 #include "cvui.h"
 //#include <opencv2/highgui/highgui.hpp>
 #include <opencv2/highgui.hpp>
@@ -15,8 +14,8 @@ const int v0=49;
 const int v1=52;
 const int v2=49;
 const int waiting_time=3000;
-const string generalpath="C:\\Users\\Diana\\Desktop\\poza";
-const string closedroom_path="C:\\Users\\Diana\\Desktop\\pozaclosed.jpg";
+const string generalpath=".\\photos\\photo";
+const string closedroom_path=".\\photos\\photoclosed.jpg";
 using namespace std;
 using namespace cv;
 
@@ -28,24 +27,24 @@ void muzeu::AdaugaDepartament(string departament)
 void muzeu::AdaugaPersonal(string departament, string nume)
 {
     if(nume_personal.count(departament)==0)
-        cout<<"Acest departament nu exista!\n";
+        cout<<"This department doesn't exist!\n";
    else
        nume_personal[departament].push_back(nume);
 }
 void muzeu::AfiseazaPersonal()
 {
-    map <string, vector <string> >::iterator  iter;
+    unordered_map <string, vector <string> >::iterator  iter;
     for(iter=nume_personal.begin();iter!=nume_personal.end();++iter)
     {
         int dimensiune=iter->second.size();
         //formatare
-        cout << "Departamentul " << iter->first << " are ";
+        cout << "The department " << iter->first << " has ";
         if (dimensiune==0)
-            cout<<"0 membri\n";
+            cout<<"0 members\n";
        else if(dimensiune==1)
-        {cout<<"1 membru:";  cout << iter->second[0] ; cout<<"\n";}
+        {cout<<"1 member:";  cout << iter->second[0] ; cout<<"\n";}
         if(dimensiune>1) {
-            cout<<dimensiune<<" membri:";
+            cout<<dimensiune<<" members:";
             cout << iter->second[0] ;
             for (int i = 1; i <dimensiune; i++)
                 cout << "," << iter->second[i];
