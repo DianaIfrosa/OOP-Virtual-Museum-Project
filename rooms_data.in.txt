@@ -1,4 +1,3 @@
-6
 CashDesk 0
 Paintings 1
 ArchitecturalModels 1

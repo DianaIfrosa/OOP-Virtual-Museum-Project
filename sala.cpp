@@ -28,11 +28,11 @@ sala sala::operator=(const sala &s){
     nr_exponate=s.nr_exponate;
     etaj=s.etaj;
     for(int i=0;i<s.nr_exponate;i++)
-        {
-            exponate[i] = s.exponate[i];
-            date_exponate[i] = s.date_exponate[i];
-            preturi_exponate[i] = s.preturi_exponate[i];
-        }
+    {
+        exponate[i] = s.exponate[i];
+        date_exponate[i] = s.date_exponate[i];
+        preturi_exponate[i] = s.preturi_exponate[i];
+    }
 
     return *this;
 }

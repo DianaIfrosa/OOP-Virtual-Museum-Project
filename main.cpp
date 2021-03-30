@@ -11,7 +11,6 @@
 
 #include "cvui.h"
 
-const int nr_rooms=6;
 const int v0=49;
 const int v1=52;
 const int v2=49;
@@ -63,19 +62,6 @@ int Price(muzeu M, client C, int nr_zi_saptamana){
 void MuseumIntroduction(muzeu M){
     cout<<M;
 }
-void ReadRoomsData( sala S[]){
-
-    string nume, data_aducere;
-    int pret,room_no,nr_rooms;
-    ifstream fin("rooms_data.in.txt");
-    fin>>nr_rooms;
-    for(int i=0;i<nr_rooms;i++)
-        fin>>S[i];
-    while (fin>>room_no>>nume>>data_aducere>>pret) //fisierul de intrare e de forma: nr_sala nume_exponat data_aducere_exp pret_exp
-        S[room_no].AdaugaExponat(nume, data_aducere, pret);
-
-
-}
 bool ButtonTour()
 {
     Mat frame=Mat(Size(650,150),CV_8UC3);
@@ -90,7 +76,7 @@ bool ButtonTour()
         }
         if(cvui::button(frame,300,80,"No"))
         {
-           return 0;
+            return 0;
         }
         cvui:: update();
         imshow("Welcome!", frame);
@@ -102,25 +88,25 @@ bool ButtonTour()
 int CurrentDay()
 {
     //https://stackoverflow.com/questions/41523301/how-to-get-the-day-of-the-week-from-a-tm-object-in-c
- time_t current_time;
- tm *timeinfo;
- time(&current_time);
- timeinfo=localtime(&current_time);
- return timeinfo->tm_wday;
+    time_t current_time;
+    tm *timeinfo;
+    time(&current_time);
+    timeinfo=localtime(&current_time);
+    return timeinfo->tm_wday;
 
 }
 int main()
 {
     muzeu M;
     client C;
-    sala S[nr_rooms];
     //citiri din fisiere
     ReadMuseumData(M);
-    ReadRoomsData(S);
+    M.ReadRoomsData();
     ReadStaffData(M);
+    //M.AfiseazaPersonal();
 
     //afiseaza date relevante despre muzeu
-     MuseumIntroduction(M);
+    MuseumIntroduction(M);
 
     ///Metode disponibile si relevante pentru obiectul muzeu (celelalte se apeleaza in cadrul turului):
 //    void AdaugaPersonal(string departament,string nume);
@@ -138,21 +124,21 @@ int main()
 
 ///Adaugarea unui exponat se poate face manual cu metoda de mai sus (si scriind ulterior datele tot manual in rooms_data.in.txt), fie
 ///adaugand direct datele (nr_sala nume_exponat data_aducerii pret_cumparare) in fisierul rooms_data.in.txt
-///iar mai apoi prin apelarea functiei ReadRoomsData(S);
+///iar mai apoi prin apelarea  M.ReadRoomsData();
 
     ///Metode disponibile si relevante pentru obiectul client
 //  void Feedback(); //ofera feedback la finalul turului, care va fi luat in calcul la feedback score al muzeului
 //  int Tip(); //se poate afla din ce categorie face parte (student, adult, child)
 
-  //incepe tur sau nu
+    //incepe tur sau nu
     bool command= ButtonTour();
     destroyAllWindows();
     if(command) {
-         cin>>C; //citeste nume si prenume client, cat si daca e adult, student sau copil
-         cout<<"The price is: "<<Price(M,C,CurrentDay())<<" lei\n";
-         cout<<"Are you sure you want to continue with the tour? Type yes or no.\n";
-         string ans;
-         cin>>ans;
+        cin>>C; //citeste nume si prenume client, cat si daca e adult, student sau copil
+        cout<<"The price is: "<<Price(M,C,CurrentDay())<<" lei\n";
+        cout<<"Are you sure you want to continue with the tour? Type yes or no.\n";
+        string ans;
+        cin>>ans;
         while(ans!="yes" && ans!="no")
         {
             cout<<"Please type yes or no.\n";
@@ -160,9 +146,9 @@ int main()
         }
         if(ans=="yes")
         {
-             M.StartTour(S);
-             C.Feedback();
-         }
+            M.StartTour();
+            C.Feedback();
+        }
 
     }
 
@@ -170,6 +156,6 @@ int main()
     M.FeedbackScore();
 
 
-   return 0;
+    return 0;
 
 }

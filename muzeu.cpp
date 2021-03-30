@@ -1,6 +1,8 @@
 #include "muzeu.h"
+//#include "sala.h"
 #include "cvui.h"
 //#include <opencv2/highgui/highgui.hpp>
+#include <vector>
 #include <opencv2/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
@@ -14,22 +16,38 @@ const int v0=49;
 const int v1=52;
 const int v2=49;
 const int waiting_time=3000;
-const string generalpath=".\\photos\\photo";
-const string closedroom_path=".\\photos\\photoclosed.jpg";
+
+const string generalpath="./photos/photo";
+const string closedroom_path="./photos/photoclosed.jpg";
+
 using namespace std;
 using namespace cv;
 
 
-void muzeu::AdaugaDepartament(string departament)
+void muzeu::ReadRoomsData() {
+
+    string nume, data_aducere;
+    int pret, room_no;
+    ifstream fin("rooms_data.in.txt");
+    for (int i = 0; i < nr_sali; i++)
+        fin >> S[i];
+
+    while (fin>>room_no>>nume>>data_aducere>>pret) //fisierul de intrare e de forma: nr_sala nume_exponat data_aducere_exp pret_exp
+        S[room_no].AdaugaExponat(nume, data_aducere, pret);
+
+
+}
+
+void muzeu::AdaugaDepartament(const string departament)
 {
     nume_personal[departament];
 }
-void muzeu::AdaugaPersonal(string departament, string nume)
+void muzeu::AdaugaPersonal(const string departament, string nume_angajat)
 {
     if(nume_personal.count(departament)==0)
         cout<<"This department doesn't exist!\n";
-   else
-       nume_personal[departament].push_back(nume);
+    else
+        nume_personal[departament].push_back(nume_angajat);
 }
 void muzeu::AfiseazaPersonal()
 {
@@ -41,9 +59,9 @@ void muzeu::AfiseazaPersonal()
         cout << "The department " << iter->first << " has ";
         if (dimensiune==0)
             cout<<"0 members\n";
-       else if(dimensiune==1)
+        else if(dimensiune==1)
         {cout<<"1 member:";  cout << iter->second[0] ; cout<<"\n";}
-        if(dimensiune>1) {
+        else if(dimensiune>1) {
             cout<<dimensiune<<" members:";
             cout << iter->second[0] ;
             for (int i = 1; i <dimensiune; i++)
@@ -61,15 +79,15 @@ int muzeu::PretZi(int nr_zi_saptamana){
 
 istream &operator >> (istream &in, muzeu &M){
 
-in>>M.nume;
-getline(in, M.adresa);
-for(int i=0;i<7;i++)
-    in>>M.ore_vizitare[i];
-in>>M.nr_sali;
-for(int i=0;i<7;i++)
-    in>>M.pret_zile[i];
+    in>>M.nume;
+    getline(in, M.adresa);
+    for(int i=0;i<7;i++)
+        in>>M.ore_vizitare[i];
+    in>>M.nr_sali;
+    for(int i=0;i<7;i++)
+        in>>M.pret_zile[i];
 
-return in;
+    return in;
 }
 ostream &operator <<(ostream &out, const muzeu &M){
 
@@ -85,10 +103,10 @@ ostream &operator <<(ostream &out, const muzeu &M){
         out<<"\n";
 
     }
-  return out;
+    return out;
 }
 
-void DisplayImage(string path, string name_window) {
+void DisplayImage(const string path, string name_window) {
 
     Mat image = imread(path, IMREAD_UNCHANGED);
     namedWindow(name_window, WINDOW_AUTOSIZE);
@@ -99,13 +117,13 @@ void DisplayImage(string path, string name_window) {
 
 }
 
-void muzeu::ShowRoom(const int nrsala, sala S[]) {
+void muzeu::ShowRoom(const int nrsala) {
     //afiseaza exponatele din camera data
     int i;
     if (S[nrsala].stare == 0)
     {//daca sala e inchisa
-    DisplayImage(closedroom_path,"Sorry for the inconvenience!");
-    return;
+        DisplayImage(closedroom_path,"Sorry for the inconvenience!");
+        return;
     }
     string src=generalpath;
 
@@ -126,71 +144,71 @@ void muzeu::ShowRoom(const int nrsala, sala S[]) {
 int Button(int nr_sala, int nr_total_sali, char nume_muzeu[])
 {
     //codificare: 1- continua tur, 2- camera precendenta, 3-rewatch, 4-exit
-   Mat frame=Mat(Size(650,150),CV_8UC3);
-   cvui::init("Menu",10);
-   while(true) {
-       frame = Scalar(v0, v1, v2); //colour
-       cvui::text(frame, 100, 40 , nume_muzeu);
-       if ( nr_sala!=nr_total_sali-2 && cvui::button(frame, 320,80, "Continue tour")) {
-          //doar pe la mijloc/inceput
-           return 1;
-       }
-       if(nr_sala==nr_total_sali-2 && cvui::button(frame,500, 40, "Finish tour"))
-       { //ultima sala- finish tour
-           return 1;
-       }
-       if(nr_sala>0 && cvui::button(frame, 100,80, "Go to previous room"))
-       {  // sa nu fie prima
-           return 2;
-       }
-       if(nr_sala>0 && nr_sala!=nr_total_sali-1 &&  cvui:: button(frame,320,40, "See again this room"))
-       { //sa nu fie nici ultima nici prima
-           return 3;
-       }
-       if(nr_sala>0 && nr_sala!=nr_total_sali-2 && cvui::button(frame,500, 80, "Exit"))
-       { //sa nu fie ultima, acolo exista "Finish tour" si sa nu fie prima
-          return 4;
-       }
-       cvui::update(); //face automat waitkey
-       imshow("Menu", frame);
-       setWindowProperty("Menu", WND_PROP_TOPMOST, 1); //aduce butonul in fata ide-ului
+    Mat frame=Mat(Size(650,150),CV_8UC3);
+    cvui::init("Menu",10);
+    while(true) {
+        frame = Scalar(v0, v1, v2); //colour
+        cvui::text(frame, 100, 40 , nume_muzeu);
+        if ( nr_sala!=nr_total_sali-2 && cvui::button(frame, 320,80, "Continue tour")) {
+            //doar pe la mijloc/inceput
+            return 1;
+        }
+        if(nr_sala==nr_total_sali-2 && cvui::button(frame,500, 40, "Finish tour"))
+        { //ultima sala- finish tour
+            return 1;
+        }
+        if(nr_sala>0 && cvui::button(frame, 100,80, "Go to previous room"))
+        {  // sa nu fie prima
+            return 2;
+        }
+        if(nr_sala>0 && nr_sala!=nr_total_sali-1 &&  cvui:: button(frame,320,40, "See again this room"))
+        { //sa nu fie nici ultima nici prima
+            return 3;
+        }
+        if(nr_sala>0 && nr_sala!=nr_total_sali-2 && cvui::button(frame,500, 80, "Exit"))
+        { //sa nu fie ultima, acolo exista "Finish tour" si sa nu fie prima
+            return 4;
+        }
+        cvui::update(); //face automat waitkey
+        imshow("Menu", frame);
+        setWindowProperty("Menu", WND_PROP_TOPMOST, 1); //aduce butonul in fata ide-ului
 
 
-   }
+    }
 
 
 }
-void muzeu::StartTour(sala S[]){
+void muzeu::StartTour(){
 
     //de la 0 la nrsali
- for(int i=0;i<nr_sali;i++) {
-     ShowRoom(i, S);
-     destroyAllWindows();
-     if(i!=nr_sali-1) {
-         int command = Button(i, nr_sali, this->nume);
-         destroyAllWindows();
-         if (command == 1) //continua tur
-             continue;
-         else if (command == 2)
-             i -= 2;
-         else if (command == 3) //rewatch
-             i--;
-         else //exit=4
-         {
-             cout << "See you next time!\n";
-             break;
-         }
-     }
- }
+    for(int i=0;i<nr_sali;i++) {
+        ShowRoom(i);
+        destroyAllWindows();
+        if(i!=nr_sali-1) {
+            int command = Button(i, nr_sali, this->nume);
+            destroyAllWindows();
+            if (command == 1) //continua tur
+                continue;
+            else if (command == 2)
+                i -= 2;
+            else if (command == 3) //rewatch
+                i--;
+            else //exit=4
+            {
+                cout << "See you next time!\n";
+                break;
+            }
+        }
+    }
 
 }
 void muzeu::FeedbackScore() {
 
     ifstream fin("feedback.txt");
-    string nume, prenume;
+    string nume_client, prenume_client;
     int nota, ct = 0;
     int suma = 0;
-    while (fin >> nume >> prenume >> nota) {
+    while (fin >> nume_client >> prenume_client >> nota) {
         ct++;
         suma+=nota;
     }

@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
-const int NRMAXSALI=7;
+const int NRMAXSALI=10;
 const int MAX_LENGTH_NAME=30;
 using namespace std;
 
@@ -19,6 +19,7 @@ class muzeu {
     //map cu nume personal; departament: nume; numele sunt retinute in vector de stringuri
     unordered_map<string, vector<string> > nume_personal;
     int nr_sali;
+    sala S[NRMAXSALI];
 
 public:
     void AdaugaPersonal(string departament,string nume);
@@ -26,8 +27,9 @@ public:
     void AfiseazaPersonal();
     void AdaugaDepartament(string departament);
     int  PretZi(int nr_zi_saptamana);
-    void StartTour(sala S[]);
-    void ShowRoom(const int nsala, sala S[]);
+    void StartTour();
+    void ShowRoom(const int nsala);
+    void ReadRoomsData();
 
     //overload >>
     friend istream &operator >> (istream &in, muzeu &M);
@@ -35,6 +37,7 @@ public:
     friend ostream &operator <<(ostream &out, const muzeu &M);
     //pentru a salva scorul dat de client
     friend class client;
+    friend class sala;
 
 };
 

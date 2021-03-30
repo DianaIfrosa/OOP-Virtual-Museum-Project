@@ -15,9 +15,9 @@ int client::Tip() {
 }
 client ::client(string nume, string prenume, string tip) {
     //constructor
-this->nume=nume;
-this->prenume=prenume;
-this->tip=tip;
+    this->nume=nume;
+    this->prenume=prenume;
+    this->tip=tip;
 
 }
 ostream &operator << (ostream &out, const client &C){
