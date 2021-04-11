@@ -12,29 +12,29 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-const int v0=49;
-const int v1=52;
-const int v2=49;
-const int waiting_time=3000;
-
-const string generalpath="./photos/photo";
-const string closedroom_path="./photos/photoclosed.jpg";
 
 using namespace std;
 using namespace cv;
 
+const int v0=49;
+const int v1=52;
+const int v2=49;
+const int waiting_time=3000;
+const string generalpath="./photos/photo";
+const string closedroom_path="./photos/photoclosed.jpg";
 
 void muzeu::ReadRoomsData() {
 
-    string nume, data_aducere;
+    string room_name, data_aducere;
     int pret, room_no;
     ifstream fin("rooms_data.in.txt");
     for (int i = 0; i < nr_sali; i++)
         fin >> S[i];
 
-    while (fin>>room_no>>nume>>data_aducere>>pret) //fisierul de intrare e de forma: nr_sala nume_exponat data_aducere_exp pret_exp
-        S[room_no].AdaugaExponat(nume, data_aducere, pret);
+    while (fin>>room_no>>room_name>>data_aducere>>pret) //fisierul de intrare e de forma: nr_sala nume_exponat data_aducere_exp pret_exp
+        S[room_no].AdaugaExponat(room_name, data_aducere, pret);
 
+    //aici poate fi folosit operatorul= din clasa sala, dar imaginile trebuie modificate
 
 }
 
@@ -108,12 +108,18 @@ ostream &operator <<(ostream &out, const muzeu &M){
 
 void DisplayImage(const string path, string name_window) {
 
-    Mat image = imread(path, IMREAD_UNCHANGED);
-    namedWindow(name_window, WINDOW_AUTOSIZE);
-
-    imshow(name_window, image);
-    setWindowProperty(name_window, WND_PROP_TOPMOST, 1); //aduce imaginea in fata ide-ului
-    waitKey(waiting_time);
+	///exception handling
+	try {
+		Mat image = imread(path, IMREAD_UNCHANGED);
+		namedWindow(name_window, WINDOW_AUTOSIZE);
+		imshow(name_window, image);
+		setWindowProperty(name_window, WND_PROP_TOPMOST, 1); //aduce imaginea in fata ide-ului
+		waitKey(waiting_time);
+	}
+	catch(...)
+	{
+		cout<<"This exhibit was not found!\n";
+	}
 
 }
 
@@ -130,7 +136,7 @@ void muzeu::ShowRoom(const int nrsala) {
     for(i=1;i<=S[nrsala].nr_exponate;i++) //iau fiecare exponat
     {
         string path;
-        //compun path ul pozanrexp_nrsala !!!!!!!
+        //compun path ul pozanrexp_nrsala !!
 
         path=src+to_string(i)+"_";
         path+=to_string(nrsala)+".jpg";

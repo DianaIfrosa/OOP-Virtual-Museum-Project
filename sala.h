@@ -2,28 +2,28 @@
 #define LABORATOR_POO_SALA_H
 #include <string>
 #include <iostream>
-using namespace std;
+
 class muzeu;
 class sala {
 
     int nr_exponate,etaj;
-    string nume_sala;
-    string *exponate; //numele obiectului expus
-    string *date_exponate; //de la ce data se afla in muzeu
+    std::string nume_sala;
+	std::string *exponate; //numele obiectului expus
+	std::string *date_exponate; //de la ce data se afla in muzeu
     bool stare; //deschisa sau inchisa-  ex: renovare (inchisa=0 , deschisa=1)
     int *preturi_exponate; //cu ce suma a fost cumparat
 
 public:
     //constructor
-    sala(string nume="-", int etaj=0);
+    sala (std::string nume="-", int etaj=0);
     //destructor
     ~sala();
     //constructor de copiere
     sala (const sala &s);
     //operator =
-    sala operator=(const sala &s);
+    sala& operator=(const sala &s);
 
-    void AdaugaExponat(string nume_exponate, string data_aducerii, int pret);
+    void AdaugaExponat(std::string nume_exponate, std::string data_aducerii, int pret);
     //setteri
     void DeschideSala();
     void InchideSala();
@@ -31,10 +31,10 @@ public:
     bool Stare();
 
     //overload <<
-    friend ostream &operator << (ostream &out, const sala &S);
-    friend istream &operator >> (istream &in, sala &S);
+    friend std::ostream &operator << (std::ostream &out, const sala &S);
+    friend std::istream &operator >> (std::istream &in, sala &S);
     friend class muzeu;
-    friend void ReadRoomsData( sala S[]);
+
 
 };
 

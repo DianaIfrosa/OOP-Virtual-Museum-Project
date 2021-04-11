@@ -5,11 +5,13 @@
 #include <ctime> //current date
 #include "muzeu.h"
 #include "client.h"
+#include "primarie.h"
 #define CVUI_IMPLEMENTATION
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
 #include "cvui.h"
+
 
 const int v0=49;
 const int v1=52;
@@ -72,11 +74,11 @@ bool ButtonTour()
         cvui:: text(frame, 40,40 ,"Would you like to start the museum tour?");
         if(cvui::button(frame,100,80,"Yes"))
         {
-            return 1;
+            return true;
         }
         if(cvui::button(frame,300,80,"No"))
         {
-            return 0;
+            return false;
         }
         cvui:: update();
         imshow("Welcome!", frame);
@@ -99,6 +101,8 @@ int main()
 {
     muzeu M;
     client C;
+    //primarie P;
+
     //citiri din fisiere
     ReadMuseumData(M);
     M.ReadRoomsData();
@@ -107,7 +111,6 @@ int main()
 
     //afiseaza date relevante despre muzeu
     MuseumIntroduction(M);
-
     ///Metode disponibile si relevante pentru obiectul muzeu (celelalte se apeleaza in cadrul turului):
 //    void AdaugaPersonal(string departament,string nume);
 //    void AfiseazaPersonal();

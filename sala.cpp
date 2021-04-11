@@ -23,16 +23,24 @@ bool sala::Stare() {
 }
 
 //operatorul =
-sala sala::operator=(const sala &s){
+sala& sala::operator=(const sala &s){
+	if (this == &s)
+		return *this; //daca am acelasi obiect
+
+	//dezaloc ce avea alocat deja
+
+	delete []exponate;
+	delete []date_exponate;
+	delete []preturi_exponate;
+
     nume_sala=s.nume_sala;
     nr_exponate=s.nr_exponate;
+	stare = s.stare;
     etaj=s.etaj;
-    for(int i=0;i<s.nr_exponate;i++)
-    {
-        exponate[i] = s.exponate[i];
-        date_exponate[i] = s.date_exponate[i];
-        preturi_exponate[i] = s.preturi_exponate[i];
-    }
+
+    exponate=s.exponate;
+    date_exponate=s.date_exponate;
+    preturi_exponate=s.preturi_exponate;
 
     return *this;
 }
