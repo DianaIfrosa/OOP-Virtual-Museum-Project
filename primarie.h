@@ -1,20 +1,21 @@
 #ifndef LABORATOR_POO_PRIMARIE_H
 #define LABORATOR_POO_PRIMARIE_H
 #include <string>
+#include <memory>
 
 class primarie {
 private:
-	int numar_angajati;
-	std::pair<std::string,int>* angajati; //perechi de tipul nume:salariu
+	int fonduri_totale;
+	std::shared_ptr<std::string> nume_primar;
 
+public:
+	explicit primarie(const int& fonduri_t=0,const int& fonduri_m=0,const std::string& nume_oras="",const std::string& primar="");
+	virtual void Despre();
 
 protected:
-	char* oras;
-	char* nume_primar;
+	std::shared_ptr<std::string> oras;
 	int fonduri_muzeu;
-	int* nrtelefon;
 
 };
-
 
 #endif //LABORATOR_POO_PRIMARIE_H

@@ -15,7 +15,7 @@ class sala {
 
 public:
     //constructor
-    sala (std::string nume="-", int etaj=0);
+    sala ();
     //destructor
     ~sala();
     //constructor de copiere
@@ -28,15 +28,13 @@ public:
     void DeschideSala();
     void InchideSala();
     //getteri
-    bool Stare();
+    bool Stare() const;
 
     //overload <<
     friend std::ostream &operator << (std::ostream &out, const sala &S);
     friend std::istream &operator >> (std::istream &in, sala &S);
     friend class muzeu;
 
-
 };
-
 
 #endif //LABORATOR_POO_SALA_H

@@ -10,7 +10,7 @@ class client {
 
 public:
     //constructor
-    client(std::string nume="-", std::string prenume="-", std::string tip="-");
+    explicit client(std::string nume="-", std::string prenume="-", std::string tip="-");
     void Feedback();
     int Tip();
     friend std::ostream &operator<<(std::ostream &out, const client &C);
@@ -18,6 +18,5 @@ public:
     friend class sala;
 
 };
-
 
 #endif //LABORATOR_POO_CLIENT_H

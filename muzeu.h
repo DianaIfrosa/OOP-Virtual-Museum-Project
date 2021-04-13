@@ -23,14 +23,16 @@ class muzeu: public primarie {
     sala S[NRMAXSALI];
 
 public:
-    void AdaugaPersonal(std::string departament,std::string nume);
+	muzeu(const std::string& oras, const std::string& nume_primar,const int& fonduri_m,const int& fonduri_t);
+    void AdaugaPersonal(const std::string& departament,const std::string& nume);
     void FeedbackScore();
     void AfiseazaPersonal();
-    void AdaugaDepartament(std::string departament);
+    void AdaugaDepartament(const std::string& departament);
     int  PretZi(int nr_zi_saptamana);
     void StartTour();
     void ShowRoom(int nsala);
     void ReadRoomsData();
+    void Despre() override; //se suprascrie functia din clasa parinte
 
     //overload >>
     friend std::istream &operator >> (std::istream &in, muzeu &M);
@@ -41,6 +43,5 @@ public:
     friend class sala;
 
 };
-
 
 #endif //LABORATOR_POO_MUZEU_H
