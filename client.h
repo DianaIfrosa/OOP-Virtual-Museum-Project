@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 
+
 class client {
 
 	std::string nume, prenume;
@@ -12,10 +13,9 @@ public:
     //constructor
     explicit client(std::string nume="-", std::string prenume="-", std::string tip="-");
     void Feedback();
-    int Tip();
+    int Tip() const;
     friend std::ostream &operator<<(std::ostream &out, const client &C);
     friend std::istream &operator>>(std::istream &in, client &C);
-    friend class sala;
 
 };
 

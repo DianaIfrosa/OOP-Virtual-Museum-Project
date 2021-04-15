@@ -1,10 +1,14 @@
 #include <iostream>
 #include <fstream>
+//#include <memory>
 #include <cmath>
 #include <string>
+#include <sstream>
 #include <ctime> //current date
+#include <iomanip>
 #include "muzeu.h"
 #include "client.h"
+#include "client_VIP.h"
 
 #define CVUI_IMPLEMENTATION
 
@@ -82,7 +86,16 @@ bool ButtonTour() {
 	}
 
 }
+string CurrentDate()
+{
+	auto t = time(nullptr);
+	auto tm = *localtime(&t);
+	ostringstream oss;
+	oss << put_time(&tm, "%d-%m-%Y");
+	auto str = oss.str();
+	return str;
 
+}
 int CurrentDay() {
 	//https://stackoverflow.com/questions/41523301/how-to-get-the-day-of-the-week-from-a-tm-object-in-c
 	time_t current_time;
@@ -95,6 +108,7 @@ int CurrentDay() {
 
 int main() {
 	client C;
+	client_VIP cv;
 	//creeaza muzeul stiind datele despre primarie
 	ifstream fin("townhall_data.in.txt");
 	string nume_p, oras;
@@ -104,15 +118,24 @@ int main() {
 	fin >> fonduri_t >> fonduri_m;
 
 	muzeu M(oras, nume_p, fonduri_m, fonduri_t);
-	primarie *ptr = &M; //pointer de tip baza(primarie) catre derivata(muzeu)
+	primarie *ptr=&M;
+
+	//exit code negativ??-------------------------------------------------------------
+	//unique_ptr <primarie> ptr; //pointer de tip baza(primarie) catre derivata(muzeu)
+	//ptr.reset(&M);
 
 	//citiri din fisiere
 	ReadMuseumData(M);
+
 	//afiseaza date relevante despre muzeu
 	ptr->Despre(); //apeleaza functia din clasa derivata(muzeu) deoarece e override/virtual
-
 	M.ReadRoomsData();
 	ReadStaffData(M);
+	M.RenoveazaSala(1);
+
+	//Donatii
+	cv.DoneazaArta(2, "Donation-SmithB", CurrentDate(), M); //trebuie adaugata imagine in photos pentru fiecare donatie
+	cv.DoneazaBani(M,500);
 
 	//incepe tur sau nu
 	bool command = ButtonTour();
@@ -137,15 +160,15 @@ int main() {
 	cout << "Our feedback score is:\n";
 	M.FeedbackScore();
 
-	///Metode disponibile si relevante pentru obiectul muzeu (celelalte se apeleaza in cadrul turului):
+	///Metode disponibile si relevante pentru obiectul din clasa muzeu (celelalte se apeleaza in cadrul turului):
 //    void AdaugaPersonal(string departament,string nume);
 //    void AfiseazaPersonal();
 //    void AdaugaDepartament(string departament);
-//    void StartTour(sala S[]);
+//    void StartTour(SalaMuzeu S[]);
 //    void FeedbackScore(); //afiseaza feedback score bazat pe fisierul in care se retin
 //    notele (si numele/prenumele) date de utilizator (client)
 
-	///Metode disponibile si relevante pentru obiectul sala
+	///Metode disponibile si relevante pentru obiectul din clasa SalaMuzeu
 //    void AdaugaExponat(string nume_exponate, string data_aducerii, int pret);
 //    void DeschideSala();
 //    void InchideSala(); //are consecinte la "rularea" turului-> va afisa o atentionare cu camera-inchisa
@@ -153,11 +176,14 @@ int main() {
 
 	///Adaugarea unui exponat se poate face manual cu metoda de mai sus (si scriind ulterior datele tot manual in rooms_data.in.txt), fie
 	///adaugand direct datele (nr_sala nume_exponat data_aducerii pret_cumparare) in fisierul rooms_data.in.txt
-	///iar mai apoi prin apelarea  M.ReadRoomsData();
+	///iar mai apoi prin apelarea  M.ReadRoomsData(); O alta metoda este prin donatii.
 
-	///Metode disponibile si relevante pentru obiectul client
+	///Metode disponibile si relevante pentru obiectul din clasa client
 //  void Feedback(); //ofera feedback la finalul turului, care va fi luat in calcul la feedback score al muzeului
 //  int Tip(); //se poate afla din ce categorie face parte (student, adult, child)
+
+
+   // mai trebuie delete ptr; ??-------------------------------------------------------------
 
 	return 0;
 

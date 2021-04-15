@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int client::Tip() {
+int client::Tip() const{
 	if (tip == "adult")
 		return 1;
 	else if (tip == "student")

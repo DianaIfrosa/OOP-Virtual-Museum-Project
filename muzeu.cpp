@@ -22,8 +22,15 @@ const string generalpath = "./photos/photo";
 const string closedroom_path = "./photos/photoclosed.jpg";
 
 //constructorul clasei derivate(muzeu) apeleaza explicit constructorul clasei de baza (primarie) cu parametri
-muzeu::muzeu(const string& oras, const string& nume_p,const int& fonduri_m,const int& fonduri_t) : primarie(fonduri_t, fonduri_m, oras, nume_p) {}
+muzeu::muzeu(const string& oras, const string& nume_p,const int& fonduri_m,const int& fonduri_t) : primarie(fonduri_t, fonduri_m, oras, nume_p)
+{
+	nume="-";
+	nr_sali=0;
+	for(int i=0;i<7;i++)
+		pret_zile[i]=0;
+	feedback_score=0;
 
+}
 void muzeu::ReadRoomsData() {
 
 	string room_name, data_aducere;
@@ -36,7 +43,7 @@ void muzeu::ReadRoomsData() {
 	           >> pret) //fisierul de intrare e de forma: nr_sala nume_exponat data_aducere_exp pret_exp
 		S[room_no].AdaugaExponat(room_name, data_aducere, pret);
 
-	//aici poate fi folosit operatorul= din clasa sala, dar imaginile trebuie modificate
+	//aici poate fi folosit operatorul= din clasa SalaMuzeu, dar imaginile trebuie modificate
 
 }
 
@@ -154,7 +161,7 @@ void muzeu::ShowRoom(const int nrsala) {
 //
 }
 
-int Button(int nr_sala, int nr_total_sali, char nume_muzeu[]) {
+int Button(int nr_sala, int nr_total_sali, string nume_muzeu) {
 	//codificare: 1- continua tur, 2- camera precendenta, 3-rewatch, 4-exit
 	Mat frame = Mat(Size(650, 150), CV_8UC3);
 	cvui::init("Menu", 10);
@@ -228,4 +235,34 @@ void muzeu::FeedbackScore() {
 	cout << feedback_score << " ";
 }
 
+void muzeu::PrimesteDonatii(int valoare) {
+
+	fonduri_muzeu+=valoare;
+}
+
+void muzeu::AdaugaExponat(int nr_sala, std::string nume_exponat, std::string data_aducerii, int pret){
+
+
+	S[nr_sala].AdaugaExponat(nume_exponat,data_aducerii,pret);
+	ofstream fout("rooms_data.in.txt", ios::app);
+	fout<<nr_sala<<" "<<nume_exponat<<" "<<data_aducerii<<" "<<pret<<"\n";
+
+}
+void muzeu::RenoveazaSala(int nrsala) {
+
+	sala* pointersala=&S[nrsala];
+	pointersala->Renoveaza();
+}
+
+void muzeu::DeschideSala(int nr_sala) {
+
+	S[nr_sala].stare=1;
+}
+void muzeu::RenoveazaMagazin(){
+
+	magS.Renoveaza();
+}
+void muzeu::DeschideMagazin() {
+	magS.stare=1;
+}
 

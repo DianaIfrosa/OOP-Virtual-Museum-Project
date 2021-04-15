@@ -10,6 +10,7 @@ private:
 
 public:
 	explicit primarie(const int& fonduri_t=0,const int& fonduri_m=0,const std::string& nume_oras="",const std::string& primar="");
+	virtual ~primarie()=default;
 	virtual void Despre();
 
 protected:
