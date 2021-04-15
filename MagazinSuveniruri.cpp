@@ -11,7 +11,6 @@ MagazinSuveniruri::MagazinSuveniruri(): sala() {
 	while(fin>>nume>>pret)
 		obiecte.emplace_back(make_pair(nume,pret)); //emplace_back ~ push_back
 
-
 }
 void MagazinSuveniruri::Viziteaza() {
 
