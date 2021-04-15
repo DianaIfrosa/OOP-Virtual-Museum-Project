@@ -66,7 +66,6 @@ int Price(muzeu M, client C, int nr_zi_saptamana) {
 
 }
 
-
 bool ButtonTour() {
 	Mat frame = Mat(Size(650, 150), CV_8UC3);
 	cvui::init("Welcome!", 10);
