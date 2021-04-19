@@ -17,9 +17,9 @@ void MagazinSuveniruri::Viziteaza() {
 	 // TO DO joc sfml-------------------------------------------------------------
 
 }
-void MagazinSuveniruri::Renoveaza() {
+void MagazinSuveniruri::Inchide() {
 
-	cout<<"The renovation of this room takes 7 days\n";
+	cout<<"The museum shop has been closed!\n";
 	stare=0;
 
 }

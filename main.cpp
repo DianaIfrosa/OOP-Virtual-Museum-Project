@@ -51,7 +51,7 @@ void ReadStaffData(muzeu &M) {
 
 }
 
-int Price(muzeu M, client C, int nr_zi_saptamana) {
+int Price(muzeu M, const client& C, int nr_zi_saptamana) {
 	//calculeaza pretul/zi in functie de tipul de client si ce zi este; 0->duminica, 1->luni etc.
 	//tip: 1->0%, 2->20%, 3->50% reduceri
 	int pret = M.PretZi(nr_zi_saptamana);
@@ -85,6 +85,24 @@ bool ButtonTour() {
 	}
 
 }
+bool ButtonDonation(){
+	Mat frame = Mat(Size(650, 150), CV_8UC3);
+	cvui::init("Donations", 10);
+	while (true) {
+		frame = Scalar(v0, v1, v2); //colour
+		cvui::text(frame, 40, 40, "Would you like to donate art or money?");
+		if (cvui::button(frame, 100, 80, "Yes")) {
+			return true;
+		}
+		if (cvui::button(frame, 300, 80, "No")) {
+			return false;
+		}
+		cvui::update();
+		imshow("Donations", frame);
+		setWindowProperty("Donations", WND_PROP_TOPMOST, 1); //aduce butonul in fata ide-ului
+
+	}
+}
 string CurrentDate()
 {
 	auto t = time(nullptr);
@@ -108,33 +126,15 @@ int CurrentDay() {
 int main() {
 	client C;
 	client_VIP cv;
-	//creeaza muzeul stiind datele despre primarie
-	ifstream fin("townhall_data.in.txt");
-	string nume_p, oras;
-	int fonduri_m, fonduri_t;
-
-	fin >> oras >> nume_p;
-	fin >> fonduri_t >> fonduri_m;
-
-	muzeu M(oras, nume_p, fonduri_m, fonduri_t);
-	primarie *ptr=&M;
-
-	//exit code negativ??-------------------------------------------------------------
-	//unique_ptr <primarie> ptr; //pointer de tip baza(primarie) catre derivata(muzeu)
-	//ptr.reset(&M);
+	muzeu M;
 
 	//citiri din fisiere
 	ReadMuseumData(M);
-
-	//afiseaza date relevante despre muzeu
-	ptr->Despre(); //apeleaza functia din clasa derivata(muzeu) deoarece e override/virtual
 	M.ReadRoomsData();
 	ReadStaffData(M);
-	M.RenoveazaSala(1);
-
-	//Donatii
-	cv.DoneazaArta(2, "Donation-SmithB", CurrentDate(), M); //trebuie adaugata imagine in photos pentru fiecare donatie
-	cv.DoneazaBani(M,500);
+	M.Despre();
+	M.InchideSala(1);
+	M.DeschideSala(1);
 
 	//incepe tur sau nu
 	bool command = ButtonTour();
@@ -159,6 +159,38 @@ int main() {
 	cout << "Our feedback score is:\n";
 	M.FeedbackScore();
 
+    //Donatii
+	command = ButtonDonation();
+	destroyAllWindows();
+	if (command) {
+		cout<<"\nPlease enter your name: ";
+		string nume,prenume,ans;
+		int value;
+		cin>>nume>>prenume;
+		cout<<"\nWould you like to donate money? (yes or no)\n";
+		cin>>ans;
+		if(ans=="yes")
+		{
+			cout<<"Please type the value: ";
+			cin>>value;
+			cv.DoneazaBani(M,value);
+			cout<<"\nThank you!\n";
+		}
+		cout<<"\nWould you like to donate art? (yes or no)\n";
+		cin>>ans;
+		if(ans=="yes")
+		{
+			cout<<"Please type the room number you would like to donate to: ";
+			int room_no;
+			cin>>room_no;
+			cv.DoneazaArta(room_no, "Donation-"+nume+" "+prenume, CurrentDate(), M); //trebuie adaugata imagine in photos pentru fiecare donatie
+			cout<<"\nThe following step is to send the piece of art to our museum address.\nThank you!\n";
+		}
+
+
+	}
+
+
 	///Metode disponibile si relevante pentru obiectul din clasa muzeu (celelalte se apeleaza in cadrul turului):
 //    void AdaugaPersonal(string departament,string nume);
 //    void AfiseazaPersonal();
@@ -181,8 +213,6 @@ int main() {
 //  void Feedback(); //ofera feedback la finalul turului, care va fi luat in calcul la feedback score al muzeului
 //  int Tip(); //se poate afla din ce categorie face parte (student, adult, child)
 
-
-   // mai trebuie delete ptr; ??-------------------------------------------------------------
 
 	return 0;
 

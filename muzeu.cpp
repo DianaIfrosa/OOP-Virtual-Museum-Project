@@ -22,9 +22,10 @@ const string generalpath = "./photos/photo";
 const string closedroom_path = "./photos/photoclosed.jpg";
 
 //constructorul clasei derivate(muzeu) apeleaza explicit constructorul clasei de baza (primarie) cu parametri
-muzeu::muzeu(const string& oras, const string& nume_p,const int& fonduri_m,const int& fonduri_t) : primarie(fonduri_t, fonduri_m, oras, nume_p)
+muzeu::muzeu()
 {
 	nume="-";
+	fonduri_muzeu=0;
 	nr_sali=0;
 	for(int i=0;i<7;i++)
 		pret_zile[i]=0;
@@ -41,7 +42,7 @@ void muzeu::ReadRoomsData() {
 
 	while (fin >> room_no >> room_name >> data_aducere
 	           >> pret) //fisierul de intrare e de forma: nr_sala nume_exponat data_aducere_exp pret_exp
-		S[room_no].AdaugaExponat(room_name, data_aducere, pret);
+		this->AdaugaExponat(room_no,room_name, data_aducere, pret);
 
 	//aici poate fi folosit operatorul= din clasa SalaMuzeu, dar imaginile trebuie modificate
 
@@ -92,6 +93,7 @@ istream &operator>>(istream &in, muzeu &M) {
 
 	in >> M.nume;
 	getline(in, M.adresa);
+	in>> M.fonduri_muzeu;
 	for (int i = 0; i < 7; i++)
 		in >> M.ore_vizitare[i];
 	in >> M.nr_sali;
@@ -243,26 +245,29 @@ void muzeu::PrimesteDonatii(int valoare) {
 void muzeu::AdaugaExponat(int nr_sala, std::string nume_exponat, std::string data_aducerii, int pret){
 
 
-	S[nr_sala].AdaugaExponat(nume_exponat,data_aducerii,pret);
-	ofstream fout("rooms_data.in.txt", ios::app);
-	fout<<nr_sala<<" "<<nume_exponat<<" "<<data_aducerii<<" "<<pret<<"\n";
+	S[nr_sala].exponate.push_back(std::make_tuple(nume_exponat,data_aducerii,pret));
+	S[nr_sala].nr_exponate++;
 
 }
-void muzeu::RenoveazaSala(int nrsala) {
+void muzeu::InchideSala(int nrsala) {
 
-	sala* pointersala=&S[nrsala];
-	pointersala->Renoveaza();
+	sala* pointersala=&S[nrsala]; //metoda virtuala apelata prin pointer la clasa de baza
+	pointersala->Inchide();
 }
 
-void muzeu::DeschideSala(int nr_sala) {
+void muzeu::InchideMagazin(){
 
-	S[nr_sala].stare=1;
+	sala* pointersala=&magS; //metoda virtuala apelata prin pointer la clasa de baza
+	pointersala->Inchide();
 }
-void muzeu::RenoveazaMagazin(){
+void muzeu::DeschideSala(int nrsala) {
 
-	magS.Renoveaza();
+	cout<<"The room no. "<<nrsala<<" is now open!\n";
+	S[nrsala].Deschide();
 }
 void muzeu::DeschideMagazin() {
-	magS.stare=1;
+
+	cout<<"The museum shop is now open!\n";
+	magS.Deschide();
 }
 

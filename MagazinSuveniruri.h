@@ -11,7 +11,7 @@ class MagazinSuveniruri:public sala {
 
 public:
 	MagazinSuveniruri();
-	void Renoveaza() override;
+	void Inchide() override;
 	void Viziteaza(); //TO DO
 	friend class muzeu;
 

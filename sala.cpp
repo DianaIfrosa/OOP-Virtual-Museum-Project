@@ -7,12 +7,16 @@ sala::sala(int et, bool stare)
 	etaj=et;
 	this->stare=stare; //implicit sala deschisa
 }
-void sala::Renoveaza() {
+void sala::Inchide() {
 
-	cout<<"The renovation of this room will take a few  days\n";
+	cout<<"This random room has been closed\n";
 }
 
 bool sala::Stare() const {
 	return this->stare;
+}
+void sala::Deschide() {
+
+	stare=true;
 }
 

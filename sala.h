@@ -9,7 +9,8 @@ public:
 	explicit sala(int et=0, bool stare=true );
 	virtual ~sala()=default;
 
-	virtual void Renoveaza();
+	virtual void Inchide();
+	void Deschide();
 
 	//getteri
 	bool Stare() const;
