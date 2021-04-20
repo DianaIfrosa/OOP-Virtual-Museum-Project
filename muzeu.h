@@ -5,6 +5,7 @@
 #include "sala.h"
 #include <vector>
 #include <string>
+#include <memory>
 #include <unordered_map>
 const int nrzile=7;
 
@@ -23,8 +24,8 @@ private:
 
 protected:
 	int nr_sali;
-	std::vector<SalaMuzeu> S;
-	MagazinSuveniruri magS;
+	//vectori de pointeri la clasa de baza (sala); pe ultima pozitie e intotdeauna magazinul de suveniruri
+	std:: vector< sala*> S;
 
 public:
 	muzeu();
@@ -44,12 +45,10 @@ public:
 
 	//setteri
 	void InchideSala(int nrsala);
-	void InchideMagazin();
 	void DeschideSala(int nrsala);
-	void DeschideMagazin();
 
-
-
+	//getter
+	int NrSali();
     //overload >>
     friend std::istream &operator >> (std::istream &in, muzeu &M);
     //overload <<

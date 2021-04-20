@@ -22,40 +22,42 @@ const string generalpath = "./photos/photo";
 const string closedroom_path = "./photos/photoclosed.jpg";
 
 //constructorul clasei derivate(muzeu) apeleaza explicit constructorul clasei de baza (primarie) cu parametri
-muzeu::muzeu()
-{
-	nume="-";
-	fonduri_muzeu=0;
-	nr_sali=0;
-	for(int i=0;i<7;i++)
-		pret_zile[i]=0;
-	feedback_score=0;
+muzeu::muzeu() {
+	nume = "-";
+	fonduri_muzeu = 0;
+	nr_sali = 0;
+	for (int i = 0; i < 7; i++)
+		pret_zile[i] = 0;
+	feedback_score = 0;
 
 }
+
 void muzeu::ReadRoomsData() {
 
 	string room_name, data_aducere;
 	int pret, room_no;
-	SalaMuzeu s;
 	ifstream fin("rooms_data.in.txt");
 	for (int i = 0; i < nr_sali; i++) {
-		fin >> s;
+		SalaMuzeu *s = new SalaMuzeu;
+		fin >> *s;
 		S.push_back(s);
 	}
 
 	while (fin >> room_no >> room_name >> data_aducere
 	           >> pret) //fisierul de intrare e de forma: nr_sala nume_exponat data_aducere_exp pret_exp
-		this->AdaugaExponat(room_no,room_name, data_aducere, pret);
+		this->AdaugaExponat(room_no, room_name, data_aducere, pret);
 
-	//aici poate fi folosit operatorul= din clasa SalaMuzeu, dar imaginile trebuie modificate
+	///pun magazinul la finalul vectorului de sali din muzeu
+	MagazinSuveniruri *magS = new MagazinSuveniruri;
+	S.push_back(magS);
 
 }
 
-void muzeu::AdaugaDepartament(const string& departament) {
+void muzeu::AdaugaDepartament(const string &departament) {
 	nume_personal[departament];
 }
 
-void muzeu::AdaugaPersonal(const string& departament,const string& nume_angajat) {
+void muzeu::AdaugaPersonal(const string &departament, const string &nume_angajat) {
 	if (nume_personal.count(departament) == 0)
 		cout << "This department doesn't exist!\n";
 	else
@@ -74,8 +76,7 @@ void muzeu::AfiseazaPersonal() {
 			cout << "1 member:";
 			cout << iter->second[0];
 			cout << "\n";
-		}
-		else if (dimensiune > 1) {
+		} else if (dimensiune > 1) {
 			cout << dimensiune << " members:";
 			cout << iter->second[0];
 			for (int i = 1; i < dimensiune; i++)
@@ -96,7 +97,7 @@ istream &operator>>(istream &in, muzeu &M) {
 
 	in >> M.nume;
 	getline(in, M.adresa);
-	in>> M.fonduri_muzeu;
+	in >> M.fonduri_muzeu;
 	for (int i = 0; i < 7; i++)
 		in >> M.ore_vizitare[i];
 	in >> M.nr_sali;
@@ -123,7 +124,7 @@ ostream &operator<<(ostream &out, const muzeu &M) {
 	return out;
 }
 
-void DisplayImage(const string& path, const string& name_window) {
+void DisplayImage(const string &path, const string &name_window) {
 
 	///exception handling
 	try {
@@ -146,13 +147,16 @@ void muzeu::Despre() {
 void muzeu::ShowRoom(const int nrsala) {
 	//afiseaza exponatele din camera data
 	int i;
-	if (S[nrsala].stare == 0) {//daca sala e inchisa
+	if ((*S[nrsala]).stare == 0) {//daca sala e inchisa
 		DisplayImage(closedroom_path, "Sorry for the inconvenience!");
 		return;
 	}
 	string src = generalpath;
 
-	for (i = 1; i <= S[nrsala].nr_exponate; i++) //iau fiecare exponat
+	SalaMuzeu *dp = dynamic_cast<SalaMuzeu *>(S[nrsala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
+	//--------------trebuie dat delete?
+
+	for (i = 1; i <= dp->nr_exponate; i++) //iau fiecare exponat
 	{
 		string path;
 		//compun path ul pozanrexp_nrsala !!
@@ -166,7 +170,7 @@ void muzeu::ShowRoom(const int nrsala) {
 //
 }
 
-int Button(int nr_sala, int nr_total_sali, string nume_muzeu) {
+int Button(int nr_sala, int nr_total_sali, const string& nume_muzeu) {
 	//codificare: 1- continua tur, 2- camera precendenta, 3-rewatch, 4-exit
 	Mat frame = Mat(Size(650, 150), CV_8UC3);
 	cvui::init("Menu", 10);
@@ -242,35 +246,35 @@ void muzeu::FeedbackScore() {
 
 void muzeu::PrimesteDonatii(int valoare) {
 
-	fonduri_muzeu+=valoare;
+	fonduri_muzeu += valoare;
 }
 
-void muzeu::AdaugaExponat(int nr_sala, std::string nume_exponat, std::string data_aducerii, int pret){
+void muzeu::AdaugaExponat(int nr_sala, std::string nume_exponat, std::string data_aducerii, int pret) {
 
-
-	S[nr_sala].exponate.push_back(std::make_tuple(nume_exponat,data_aducerii,pret));
-	S[nr_sala].nr_exponate++;
+	SalaMuzeu *dp = dynamic_cast<SalaMuzeu *>(S[nr_sala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
+	dp->exponate.push_back(std::make_tuple(nume_exponat, data_aducerii, pret));
+	dp->nr_exponate++;
 
 }
+
 void muzeu::InchideSala(int nrsala) {
 
-	sala* pointersala=&S[nrsala]; //metoda virtuala apelata prin pointer la clasa de baza
-	pointersala->Inchide();
+    //metoda virtuala apelata prin pointer la clasa de baza
+	S[nrsala]->Inchide();
 }
 
-void muzeu::InchideMagazin(){
-
-	sala* pointersala=&magS; //metoda virtuala apelata prin pointer la clasa de baza
-	pointersala->Inchide();
-}
 void muzeu::DeschideSala(int nrsala) {
 
-	cout<<"The room no. "<<nrsala<<" is now open!\n";
-	S[nrsala].Deschide();
+	if (nrsala < nr_sali) {
+		cout << "The room no. " << nrsala << " is now open!\n";
+	}
+	else { //am magazinul
+		cout << "The museum shop is now open!\n";
+	}
+	S[nrsala]->Deschide();
 }
-void muzeu::DeschideMagazin() {
+int muzeu::NrSali() {
+	return nr_sali;
+}
 
-	cout<<"The museum shop is now open!\n";
-	magS.Deschide();
-}
 

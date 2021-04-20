@@ -183,18 +183,27 @@ int main() {
 		cout << "\nWould you like to donate art? (yes or no)\n";
 		cin >> ans;
 		if (ans == "yes") {
-			cout << "Please type the room number you would like to donate to: ";
+			cout << "Please type the room number you would like to donate to (a number from 1 to "+to_string(M.NrSali())+")\n";
 			int room_no;
-			cin >> room_no;
-			cv.DoneazaArta(room_no, "Donation-" + nume + " " + prenume, CurrentDate(),
-			               M); //trebuie adaugata imagine in photos pentru fiecare donatie
+			while (true) {
+				cin >> room_no;
+				try {
+					if (room_no<=0 || room_no>M.NrSali())
+						throw invalid_argument("Invalid museum room number! Please type a number from 1 to "+to_string(M.NrSali())+"\n");
+					break;
+				}
+				catch (const invalid_argument &err) { cout << err.what(); }
+
+			}
+			cv.DoneazaArta(room_no-1, "Donation-" + nume + " " + prenume, CurrentDate(),
+			               M); //trebuie adaugata imagine in photos pentru fiecare donatie; room_no-1 ptc clientul foloseste indexare de la 1
 			cout << "\nThe following step is to send the piece of art to our museum address.\nThank you!\n";
 		}
 
 
 	}
 
-
+//-------------------de actualizat
 	///Metode disponibile si relevante pentru obiectul din clasa muzeu (celelalte se apeleaza in cadrul turului):
 //    void AdaugaPersonal(string departament,string nume);
 //    void AfiseazaPersonal();

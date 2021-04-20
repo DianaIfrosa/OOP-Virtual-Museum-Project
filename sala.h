@@ -15,6 +15,8 @@ public:
 	//getteri
 	bool Stare() const;
 
+	friend class muzeu;
+
 };
 
 
