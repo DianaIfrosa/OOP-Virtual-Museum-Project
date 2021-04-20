@@ -51,7 +51,7 @@ void ReadStaffData(muzeu &M) {
 
 }
 
-int Price(muzeu M, const client& C, int nr_zi_saptamana) {
+int Price(muzeu M, const client_VIP &C, int nr_zi_saptamana) {
 	//calculeaza pretul/zi in functie de tipul de client si ce zi este; 0->duminica, 1->luni etc.
 	//tip: 1->0%, 2->20%, 3->50% reduceri
 	int pret = M.PretZi(nr_zi_saptamana);
@@ -85,7 +85,8 @@ bool ButtonTour() {
 	}
 
 }
-bool ButtonDonation(){
+
+bool ButtonDonation() {
 	Mat frame = Mat(Size(650, 150), CV_8UC3);
 	cvui::init("Donations", 10);
 	while (true) {
@@ -103,8 +104,8 @@ bool ButtonDonation(){
 
 	}
 }
-string CurrentDate()
-{
+
+string CurrentDate() {
 	auto t = time(nullptr);
 	auto tm = *localtime(&t);
 	ostringstream oss;
@@ -113,8 +114,8 @@ string CurrentDate()
 	return str;
 
 }
+
 int CurrentDay() {
-	//https://stackoverflow.com/questions/41523301/how-to-get-the-day-of-the-week-from-a-tm-object-in-c
 	time_t current_time;
 	tm *timeinfo;
 	time(&current_time);
@@ -124,7 +125,6 @@ int CurrentDay() {
 }
 
 int main() {
-	client C;
 	client_VIP cv;
 	muzeu M;
 
@@ -140,18 +140,23 @@ int main() {
 	bool command = ButtonTour();
 	destroyAllWindows();
 	if (command) {
-		cin >> C; //citeste nume si prenume client, cat si daca e adult, student sau copil
-		cout << "Your custom price is: " << Price(M, C, CurrentDay()) << "$\n";
+		cin >> cv; //citeste nume si prenume client, cat si daca e adult, student sau copil
+		cout << "Your custom price is: " << Price(M, cv, CurrentDay()) << "$\n";
 		cout << "Are you sure you want to continue with the tour? Type yes or no.\n";
 		string ans;
-		cin >> ans;
-		while (ans != "yes" && ans != "no") {
-			cout << "Please type yes or no.\n";
+		while (true) {
 			cin >> ans;
+			try {
+				if (ans != "yes" && ans != "no")
+					throw invalid_argument("Please type yes or no.\n");
+				break;
+			}
+			catch (const invalid_argument &err) { cout << err.what(); } //afiseaza mesajul de mai sus
+
 		}
 		if (ans == "yes") {
 			M.StartTour();
-			C.Feedback();
+			cv.Feedback();
 		}
 
 	}
@@ -159,32 +164,31 @@ int main() {
 	cout << "Our feedback score is:\n";
 	M.FeedbackScore();
 
-    //Donatii
+	//Donatii
 	command = ButtonDonation();
 	destroyAllWindows();
 	if (command) {
-		cout<<"\nPlease enter your name: ";
-		string nume,prenume,ans;
+		cout << "\nPlease enter your name: ";
+		string nume, prenume, ans;
 		int value;
-		cin>>nume>>prenume;
-		cout<<"\nWould you like to donate money? (yes or no)\n";
-		cin>>ans;
-		if(ans=="yes")
-		{
-			cout<<"Please type the value: ";
-			cin>>value;
-			cv.DoneazaBani(M,value);
-			cout<<"\nThank you!\n";
+		cin >> nume >> prenume;
+		cout << "\nWould you like to donate money? (yes or no)\n";
+		cin >> ans;
+		if (ans == "yes") {
+			cout << "Please type the value: ";
+			cin >> value;
+			cv.DoneazaBani(M, value);
+			cout << "\nThank you!\n";
 		}
-		cout<<"\nWould you like to donate art? (yes or no)\n";
-		cin>>ans;
-		if(ans=="yes")
-		{
-			cout<<"Please type the room number you would like to donate to: ";
+		cout << "\nWould you like to donate art? (yes or no)\n";
+		cin >> ans;
+		if (ans == "yes") {
+			cout << "Please type the room number you would like to donate to: ";
 			int room_no;
-			cin>>room_no;
-			cv.DoneazaArta(room_no, "Donation-"+nume+" "+prenume, CurrentDate(), M); //trebuie adaugata imagine in photos pentru fiecare donatie
-			cout<<"\nThe following step is to send the piece of art to our museum address.\nThank you!\n";
+			cin >> room_no;
+			cv.DoneazaArta(room_no, "Donation-" + nume + " " + prenume, CurrentDate(),
+			               M); //trebuie adaugata imagine in photos pentru fiecare donatie
+			cout << "\nThe following step is to send the piece of art to our museum address.\nThank you!\n";
 		}
 
 

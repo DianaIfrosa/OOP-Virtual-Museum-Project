@@ -6,6 +6,7 @@
 class client_VIP: public client{
 
 public:
+	~client_VIP()=default;
 	void DoneazaBani(muzeu &Muz, int val);
 	void DoneazaArta(int nrsala, std::string nume, std::string data, muzeu &M);
 

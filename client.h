@@ -12,6 +12,7 @@ class client {
 public:
     //constructor
     explicit client(std::string nume="-", std::string prenume="-", std::string tip="-");
+    virtual ~client()=default;
     void Feedback();
     int Tip() const;
     friend std::ostream &operator<<(std::ostream &out, const client &C);

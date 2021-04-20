@@ -6,17 +6,16 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
-
-const int NRMAXSALI=10;
+const int nrzile=7;
 
 class muzeu {
 
 private:
     std::string nume;
-	std::string ore_vizitare[7]; // la fiecare pozitie (zi a sapt)
+	std::string ore_vizitare[nrzile]; // la fiecare pozitie (zi a sapt)
     //e interval orar de genul 11-18 sau - daca nu se poate vizita in acea zi
     std::string adresa;
-    int pret_zile[7];
+    int pret_zile[nrzile];
 	int fonduri_muzeu;
     double feedback_score;
     //map cu nume personal; departament: nume; numele sunt retinute in vector de stringuri
@@ -24,8 +23,7 @@ private:
 
 protected:
 	int nr_sali;
-
-	SalaMuzeu S[NRMAXSALI];
+	std::vector<SalaMuzeu> S;
 	MagazinSuveniruri magS;
 
 public:

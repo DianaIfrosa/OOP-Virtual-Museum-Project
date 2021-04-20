@@ -5,7 +5,7 @@
 
 using namespace std;
 
-int client::Tip() const{
+int client::Tip() const {
 	if (tip == "adult")
 		return 1;
 	else if (tip == "student")
@@ -31,10 +31,15 @@ istream &operator>>(istream &in, client &C) {
 	cout << "Please enter your name: ";
 	in >> C.nume >> C.prenume;
 	cout << "Please enter your category (adult, student, child):";
-	in >> category;
-	while (category != "adult" && category != "student" && category != "child") {
-		cout << "Invalid input! Please enter adult, student or child\n";
+	while (true) {
 		in >> category;
+		try {
+			if (category != "adult" && category != "student" && category != "child")
+				throw invalid_argument("Invalid input! Please enter adult, student or child.\n");
+			break;
+		}
+		catch (const invalid_argument &err) { cout << err.what(); }
+
 	}
 	C.tip = category;
 	return in;
@@ -46,11 +51,15 @@ void client::Feedback() {
 	double nota;
 	ofstream fout("feedback.txt", ios::app); //pentru a putea scrie la sfarsitul fisierului
 	cout << "Please give us feedback. On a scale of 1 to 5, how much did you enjoy this tour?\n";
-	cin >> nota;
-
-	while (int(nota) != nota || nota > 5 || nota < 1) {
-		cout << "Invalid feedback! Please enter 1,2,3,4 or 5.\n";
+	while (true) {
 		cin >> nota;
+		try {
+			if (int(nota) != nota || nota > 5 || nota < 1)
+				throw invalid_argument("Invalid feedback! Please enter 1,2,3,4 or 5.\n");
+			break;
+		}
+		catch (const invalid_argument &err) { cout << err.what(); }
+
 	}
 	cout << "Thank you!\n";
 	fout << nume + " " + prenume << " " << nota << "\n";

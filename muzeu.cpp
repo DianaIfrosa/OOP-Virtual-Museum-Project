@@ -17,7 +17,7 @@ using namespace cv;
 const int v0 = 49;
 const int v1 = 52;
 const int v2 = 49;
-const int waiting_time = 3000;
+const int waiting_time = 30;
 const string generalpath = "./photos/photo";
 const string closedroom_path = "./photos/photoclosed.jpg";
 
@@ -36,9 +36,12 @@ void muzeu::ReadRoomsData() {
 
 	string room_name, data_aducere;
 	int pret, room_no;
+	SalaMuzeu s;
 	ifstream fin("rooms_data.in.txt");
-	for (int i = 0; i < nr_sali; i++)
-		fin >> S[i];
+	for (int i = 0; i < nr_sali; i++) {
+		fin >> s;
+		S.push_back(s);
+	}
 
 	while (fin >> room_no >> room_name >> data_aducere
 	           >> pret) //fisierul de intrare e de forma: nr_sala nume_exponat data_aducere_exp pret_exp
