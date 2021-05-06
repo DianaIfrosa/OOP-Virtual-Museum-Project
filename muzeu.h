@@ -24,11 +24,12 @@ private:
 
 protected:
 	int nr_sali;
-	//vectori de pointeri la clasa de baza (sala); pe ultima pozitie e intotdeauna magazinul de suveniruri
+	//vector de pointeri la clasa de baza (sala); pe ultima pozitie e intotdeauna magazinul de suveniruri
 	std:: vector< sala*> S;
 
 public:
 	muzeu();
+	~muzeu();
     void AdaugaPersonal(const std::string& departament,const std::string& nume);
     void FeedbackScore();
     void AfiseazaPersonal();
@@ -53,6 +54,10 @@ public:
     friend std::istream &operator >> (std::istream &in, muzeu &M);
     //overload <<
     friend std::ostream &operator <<(std::ostream &out, const muzeu &M);
+
+    //sterg cc si op= pentru a nu putea duplica obiecte de tip muzeu (ca sa nu le rescriu)
+    muzeu(const muzeu&)=delete;
+    muzeu& operator=(const muzeu&)=delete;
 
 };
 

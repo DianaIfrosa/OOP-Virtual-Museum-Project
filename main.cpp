@@ -51,7 +51,7 @@ void ReadStaffData(muzeu &M) {
 
 }
 
-int Price(muzeu M, const client_VIP &C, int nr_zi_saptamana) {
+int Price(muzeu& M, const client_VIP &C, int nr_zi_saptamana) {
 	//calculeaza pretul/zi in functie de tipul de client si ce zi este; 0->duminica, 1->luni etc.
 	//tip: 1->0%, 2->20%, 3->50% reduceri
 	int pret = M.PretZi(nr_zi_saptamana);

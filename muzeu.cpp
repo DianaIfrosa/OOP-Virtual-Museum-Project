@@ -31,13 +31,23 @@ muzeu::muzeu() {
 	feedback_score = 0;
 
 }
+muzeu::~muzeu()
+{
+	//sterg pointerii alocati dinamic
+	for(int i=0;i<nr_sali;++i) {
+		delete S[i];
+		S[i] = NULL;
+	}
 
+	S.clear();
+
+}
 void muzeu::ReadRoomsData() {
 
 	string room_name, data_aducere;
 	int pret, room_no;
 	ifstream fin("rooms_data.in.txt");
-	for (int i = 0; i < nr_sali; i++) {
+	for (int i = 0; i < nr_sali-1; i++) {
 		SalaMuzeu *s = new SalaMuzeu;
 		fin >> *s;
 		S.push_back(s);
@@ -154,7 +164,7 @@ void muzeu::ShowRoom(const int nrsala) {
 	string src = generalpath;
 
 	SalaMuzeu *dp = dynamic_cast<SalaMuzeu *>(S[nrsala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
-	//--------------trebuie dat delete?
+
 
 	for (i = 1; i <= dp->nr_exponate; i++) //iau fiecare exponat
 	{
