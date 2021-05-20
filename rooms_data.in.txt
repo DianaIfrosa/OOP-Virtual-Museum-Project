@@ -15,4 +15,5 @@ Feedback-Exit 1
 4 ManCostume 02-09-1998 56000
 0 Hall - 0
 5 ExitHall - 0
-2 Donation-Smith B 19-04-2021 0
+1 Donation-A-B 20-05-2021 0
+2 Donation-C-D 20-05-2021 0

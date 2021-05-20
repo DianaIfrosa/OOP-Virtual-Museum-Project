@@ -168,7 +168,7 @@ int main() {
 	command = ButtonDonation();
 	destroyAllWindows();
 	if (command) {
-		cout << "\nPlease enter your name: ";
+		cout << "\nPlease enter your first and last name: ";
 		string nume, prenume, ans;
 		int value;
 		cin >> nume >> prenume;
@@ -195,9 +195,9 @@ int main() {
 				catch (const invalid_argument &err) { cout << err.what(); }
 
 			}
-			cv.DoneazaArta(room_no-1, "Donation-" + nume + " " + prenume, CurrentDate(),
+			cv.DoneazaArta(room_no-1, "Donation-" + nume + "-"+ prenume, CurrentDate(),
 			               M); //trebuie adaugata imagine in photos pentru fiecare donatie; room_no-1 ptc clientul foloseste indexare de la 1
-			cout << "\nThe following step is to send the piece of art to our museum address.\nThank you!\n";
+			cout << "\nThe next step is to send the piece of art to our museum address.\nThank you!\n";
 		}
 
 

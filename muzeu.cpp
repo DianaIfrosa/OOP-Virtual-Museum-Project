@@ -17,7 +17,7 @@ using namespace cv;
 const int v0 = 49;
 const int v1 = 52;
 const int v2 = 49;
-const int waiting_time = 30;
+const int waiting_time = 300;
 const string generalpath = "./photos/photo";
 const string closedroom_path = "./photos/photoclosed.jpg";
 
@@ -192,7 +192,7 @@ int Button(int nr_sala, int nr_total_sali, const string& nume_muzeu) {
 			return 1;
 		}
 		if (nr_sala == nr_total_sali - 2 && cvui::button(frame, 500, 40, "Finish tour")) { //ultima sala- finish tour
-			return 1;
+			return 4;
 		}
 		if (nr_sala > 0 && cvui::button(frame, 100, 80, "Go to previous room")) {  // sa nu fie prima
 			return 2;
@@ -286,5 +286,6 @@ void muzeu::DeschideSala(int nrsala) {
 int muzeu::NrSali() {
 	return nr_sali;
 }
+
 
 
