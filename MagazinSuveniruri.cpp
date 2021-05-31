@@ -3,6 +3,8 @@
 #include <iostream>
 using namespace std;
 
+MagazinSuveniruri* MagazinSuveniruri::mag=nullptr;
+
 MagazinSuveniruri::MagazinSuveniruri(): sala() {
 
 	ifstream fin("souvenirs.in.txt");
@@ -20,6 +22,7 @@ void MagazinSuveniruri::Viziteaza() {
 void MagazinSuveniruri::Inchide() {
 
 	cout<<"The museum shop has been closed!\n";
-	stare=0;
+	stare=false;
 
 }
+

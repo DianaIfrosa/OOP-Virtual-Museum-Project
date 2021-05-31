@@ -61,8 +61,8 @@ void muzeu::ReadRoomsData() {
 		this->AdaugaExponat(room_no, room_name, data_aducere, pret);
 
 	///pun magazinul la finalul vectorului de sali din muzeu
-	auto *magS = new MagazinSuveniruri;
-	S.push_back(magS);
+
+	S.push_back(MagazinSuveniruri::get_shop());
 
 }
 
@@ -265,7 +265,7 @@ void muzeu::PrimesteDonatii(int valoare) {
 void muzeu::AdaugaExponat(int nr_sala, const std::string& nume_exponat, const std::string& data_aducerii, int pret) {
 
 	auto *dp = dynamic_cast<SalaMuzeu *>(S[nr_sala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
-	dp->exponate.push_back(std::make_tuple(nume_exponat, data_aducerii, pret));
+	dp->exponate.emplace_back(std::make_tuple(nume_exponat, data_aducerii, pret));
 	dp->nr_exponate++;
 
 }

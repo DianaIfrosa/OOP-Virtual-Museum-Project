@@ -65,7 +65,8 @@ public:
     muzeu& operator=(const muzeu&)=delete;
 
     static muzeu* get_museum(){
-		if(m==nullptr) {m=new muzeu;}
+		if(m==nullptr)
+			m=new muzeu;
 		return m;
     }
 
