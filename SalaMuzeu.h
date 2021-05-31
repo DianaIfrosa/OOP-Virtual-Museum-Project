@@ -15,7 +15,7 @@ public:
     //constructor
     SalaMuzeu ();
     //destructor
-    ~SalaMuzeu()=default;
+    ~SalaMuzeu() override=default;
 
     void Inchide() override;
 

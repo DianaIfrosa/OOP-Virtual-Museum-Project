@@ -126,22 +126,22 @@ int CurrentDay() {
 
 int main() {
 	client_VIP cv;
-	muzeu M;
+	auto M=muzeu::get_museum();
 
 	//citiri din fisiere
-	ReadMuseumData(M);
-	M.ReadRoomsData();
-	ReadStaffData(M);
-	M.Despre();
-	M.InchideSala(1);
-	M.DeschideSala(1);
+	ReadMuseumData(*M);
+	M->ReadRoomsData();
+	ReadStaffData(*M);
+	M->Despre();
+	M->InchideSala(1);
+	M->DeschideSala(1);
 
 	//incepe tur sau nu
 	bool command = ButtonTour();
 	destroyAllWindows();
 	if (command) {
 		cin >> cv; //citeste nume si prenume client, cat si daca e adult, student sau copil
-		cout << "Your custom price is: " << Price(M, cv, CurrentDay()) << "$\n";
+		cout << "Your custom price is: " << Price(*M, cv, CurrentDay()) << "$\n";
 		cout << "Are you sure you want to continue with the tour? Type yes or no.\n";
 		string ans;
 		while (true) {
@@ -155,14 +155,14 @@ int main() {
 
 		}
 		if (ans == "yes") {
-			M.StartTour();
+			M->StartTour();
 			cv.Feedback();
 		}
 
 	}
 
 	cout << "Our feedback score is:\n";
-	M.FeedbackScore();
+	M->FeedbackScore();
 
 	//Donatii
 	command = ButtonDonation();
@@ -177,26 +177,26 @@ int main() {
 		if (ans == "yes") {
 			cout << "Please type the value: ";
 			cin >> value;
-			cv.DoneazaBani(M, value);
+			client_VIP::DoneazaBani(*M, value);
 			cout << "\nThank you!\n";
 		}
 		cout << "\nWould you like to donate art? (yes or no)\n";
 		cin >> ans;
 		if (ans == "yes") {
-			cout << "Please type the room number you would like to donate to (a number from 1 to "+to_string(M.NrSali())+")\n";
+			cout << "Please type the room number you would like to donate to (a number from 1 to "+to_string(M->NrSali())+")\n";
 			int room_no;
 			while (true) {
 				cin >> room_no;
 				try {
-					if (room_no<=0 || room_no>M.NrSali())
-						throw invalid_argument("Invalid museum room number! Please type a number from 1 to "+to_string(M.NrSali())+"\n");
+					if (room_no<=0 || room_no>M->NrSali())
+						throw invalid_argument("Invalid museum room number! Please type a number from 1 to "+to_string(M->NrSali())+"\n");
 					break;
 				}
 				catch (const invalid_argument &err) { cout << err.what(); }
 
 			}
-			cv.DoneazaArta(room_no-1, "Donation-" + nume + "-"+ prenume, CurrentDate(),
-			               M); //trebuie adaugata imagine in photos pentru fiecare donatie; room_no-1 ptc clientul foloseste indexare de la 1
+			client_VIP::DoneazaArta(room_no-1, "Donation-" + nume + "-"+ prenume, CurrentDate(),
+			               *M); //trebuie adaugata imagine in photos pentru fiecare donatie; room_no-1 ptc clientul foloseste indexare de la 1
 			cout << "\nThe next step is to send the piece of art to our museum address.\nThank you!\n";
 		}
 

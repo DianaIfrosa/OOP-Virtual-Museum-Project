@@ -25,7 +25,7 @@ istream &operator>>(istream &in, SalaMuzeu &S) {
 void SalaMuzeu::Inchide() {
 
 	cout<<"This museum room has been closed!\n";
-	stare=0;
+	stare=false;
 
 }
 

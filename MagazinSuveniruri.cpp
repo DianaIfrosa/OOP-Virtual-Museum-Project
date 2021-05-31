@@ -14,7 +14,7 @@ MagazinSuveniruri::MagazinSuveniruri(): sala() {
 }
 void MagazinSuveniruri::Viziteaza() {
 
-	 // TO DO joc sfml-------------------------------------------------------------
+	 // TO DO
 
 }
 void MagazinSuveniruri::Inchide() {

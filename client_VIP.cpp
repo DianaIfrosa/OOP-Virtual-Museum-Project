@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-void client_VIP::DoneazaArta(int nrsala, string nume, string data, muzeu &Muz) {
+ void client_VIP::DoneazaArta(int nrsala, const string& nume, const string& data, muzeu &Muz) {
 
 	ofstream fout("rooms_data.in.txt", ios::app);
 	fout<<nrsala<<" "<<nume<<" "<<data<<" "<<0<<"\n";

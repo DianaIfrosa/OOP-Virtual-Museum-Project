@@ -21,6 +21,9 @@ const int waiting_time = 300;
 const string generalpath = "./photos/photo";
 const string closedroom_path = "./photos/photoclosed.jpg";
 
+
+muzeu* muzeu::m=nullptr;
+
 //constructorul clasei derivate(muzeu) apeleaza explicit constructorul clasei de baza (primarie) cu parametri
 muzeu::muzeu() {
 	nume = "-";
@@ -36,7 +39,7 @@ muzeu::~muzeu()
 	//sterg pointerii alocati dinamic
 	for(int i=0;i<nr_sali;++i) {
 		delete S[i];
-		S[i] = NULL;
+		S[i] = nullptr;
 	}
 
 	S.clear();
@@ -48,7 +51,7 @@ void muzeu::ReadRoomsData() {
 	int pret, room_no;
 	ifstream fin("rooms_data.in.txt");
 	for (int i = 0; i < nr_sali-1; i++) {
-		SalaMuzeu *s = new SalaMuzeu;
+		auto *s = new SalaMuzeu;
 		fin >> *s;
 		S.push_back(s);
 	}
@@ -58,7 +61,7 @@ void muzeu::ReadRoomsData() {
 		this->AdaugaExponat(room_no, room_name, data_aducere, pret);
 
 	///pun magazinul la finalul vectorului de sali din muzeu
-	MagazinSuveniruri *magS = new MagazinSuveniruri;
+	auto *magS = new MagazinSuveniruri;
 	S.push_back(magS);
 
 }
@@ -150,7 +153,7 @@ void DisplayImage(const string &path, const string &name_window) {
 
 }
 
-void muzeu::Despre() {
+void muzeu::Despre() const {
 	cout << *this;
 }
 
@@ -163,7 +166,7 @@ void muzeu::ShowRoom(const int nrsala) {
 	}
 	string src = generalpath;
 
-	SalaMuzeu *dp = dynamic_cast<SalaMuzeu *>(S[nrsala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
+	auto*dp = dynamic_cast<SalaMuzeu *>(S[nrsala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
 
 
 	for (i = 1; i <= dp->nr_exponate; i++) //iau fiecare exponat
@@ -259,9 +262,9 @@ void muzeu::PrimesteDonatii(int valoare) {
 	fonduri_muzeu += valoare;
 }
 
-void muzeu::AdaugaExponat(int nr_sala, std::string nume_exponat, std::string data_aducerii, int pret) {
+void muzeu::AdaugaExponat(int nr_sala, const std::string& nume_exponat, const std::string& data_aducerii, int pret) {
 
-	SalaMuzeu *dp = dynamic_cast<SalaMuzeu *>(S[nr_sala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
+	auto *dp = dynamic_cast<SalaMuzeu *>(S[nr_sala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
 	dp->exponate.push_back(std::make_tuple(nume_exponat, data_aducerii, pret));
 	dp->nr_exponate++;
 
@@ -283,7 +286,7 @@ void muzeu::DeschideSala(int nrsala) {
 	}
 	S[nrsala]->Deschide();
 }
-int muzeu::NrSali() {
+int muzeu::NrSali() const{
 	return nr_sali;
 }
 
