@@ -17,7 +17,7 @@ using namespace cv;
 const int v0 = 49;
 const int v1 = 52;
 const int v2 = 49;
-const int waiting_time = 300;
+const int waiting_time = 3000;
 const string generalpath = "./photos/photo";
 const string closedroom_path = "./photos/photoclosed.jpg";
 
@@ -51,7 +51,7 @@ void muzeu::ReadRoomsData() {
 	int pret, room_no;
 	ifstream fin("rooms_data.in.txt");
 	for (int i = 0; i < nr_sali-1; i++) {
-		auto *s = new SalaMuzeu;
+		auto *s = new MuseumRoom;
 		fin >> *s;
 		S.push_back(s);
 	}
@@ -62,7 +62,7 @@ void muzeu::ReadRoomsData() {
 
 	///pun magazinul la finalul vectorului de sali din muzeu
 
-	S.push_back(MagazinSuveniruri::get_shop());
+	S.push_back(SouvenirShop::get_shop());
 
 }
 
@@ -123,7 +123,7 @@ istream &operator>>(istream &in, muzeu &M) {
 ostream &operator<<(ostream &out, const muzeu &M) {
 
 	//detalii despre muzeu
-	out << "Welcome to " << M.nume << ". Our adress is " << M.adresa << "\n";
+	out << "Welcome to " << M.nume << ". Our adress is " << M.adresa << ".\n";
 	out << "Visiting hours and prices:\n";
 	string zile_sapt[7] = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 	for (int i = 0; i < 7; i++) {
@@ -160,16 +160,16 @@ void muzeu::Despre() const {
 void muzeu::ShowRoom(const int nrsala) {
 	//afiseaza exponatele din camera data
 	int i;
-	if ((*S[nrsala]).stare == 0) {//daca sala e inchisa
+	if ((*S[nrsala]).state == 0) {//daca sala e inchisa
 		DisplayImage(closedroom_path, "Sorry for the inconvenience!");
 		return;
 	}
 	string src = generalpath;
 
-	auto*dp = dynamic_cast<SalaMuzeu *>(S[nrsala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
+	auto*dp = dynamic_cast<MuseumRoom *>(S[nrsala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
 
 
-	for (i = 1; i <= dp->nr_exponate; i++) //iau fiecare exponat
+	for (i = 1; i <= dp->number_exhibits; i++) //iau fiecare exponat
 	{
 		string path;
 		//compun path ul pozanrexp_nrsala !!
@@ -264,16 +264,16 @@ void muzeu::PrimesteDonatii(int valoare) {
 
 void muzeu::AdaugaExponat(int nr_sala, const std::string& nume_exponat, const std::string& data_aducerii, int pret) {
 
-	auto *dp = dynamic_cast<SalaMuzeu *>(S[nr_sala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
-	dp->exponate.emplace_back(std::make_tuple(nume_exponat, data_aducerii, pret));
-	dp->nr_exponate++;
+	auto *dp = dynamic_cast<MuseumRoom *>(S[nr_sala]); //acum pointeaza la partea derivata (salamuzeu) si nu numai la baza (sala)
+	dp->exhibits.emplace_back(std::make_tuple(nume_exponat, data_aducerii, pret));
+	dp->number_exhibits++;
 
 }
 
 void muzeu::InchideSala(int nrsala) {
 
     //metoda virtuala apelata prin pointer la clasa de baza
-	S[nrsala]->Inchide();
+	S[nrsala]->Close();
 }
 
 void muzeu::DeschideSala(int nrsala) {
@@ -284,7 +284,7 @@ void muzeu::DeschideSala(int nrsala) {
 	else { //am magazinul
 		cout << "The museum shop is now open!\n";
 	}
-	S[nrsala]->Deschide();
+	S[nrsala]->Open();
 }
 int muzeu::NrSali() const{
 	return nr_sali;

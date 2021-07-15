@@ -28,7 +28,7 @@ ostream &operator<<(ostream &out, const client &C) {
 
 istream &operator>>(istream &in, client &C) {
 	string category;
-	cout << "Please enter your name: ";
+	cout << "Please enter your first and last name: ";
 	in >> C.nume >> C.prenume;
 	cout << "Please enter your category (adult, student, child):";
 	while (true) {

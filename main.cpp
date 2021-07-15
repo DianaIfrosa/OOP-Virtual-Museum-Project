@@ -32,41 +32,44 @@ void ReadMuseumData(muzeu &M) {
 void ReadStaffData(muzeu &M) {
 
 	ifstream fin("staff_data.in.txt");
-	string departament, nume;
-	int nr_dep, nr_pers;
-	fin >> nr_dep;
-	for (int i = 0; i < nr_dep; i++) {
-		fin >> departament;
-		M.AdaugaDepartament(departament);
+	string department, name;
+	int number_dep, number_staff;
+	fin >> number_dep;
+	//fiecare departament
+	for (int i = 0; i < number_dep; i++) {
+		fin >> department;
+		M.AdaugaDepartament(department);
 	}
 
-	fin >> nr_pers;
-	for (int i = 0; i < nr_pers; i++) {
-		fin >> departament;
-		getline(fin, nume);
-		M.AdaugaPersonal(departament, nume);
+	fin >> number_staff;
+	//fiecare persoana din staff
+	for (int i = 0; i < number_staff; i++) {
+		fin >> department;
+		getline(fin, name);
+		M.AdaugaPersonal(department, name);
 	}
 
 	//M.AfiseazaPersonal();
 
 }
 
-int Price(muzeu& M, const client_VIP &C, int nr_zi_saptamana) {
+int Price(muzeu& M, const client_VIP &C, int day_week) {
 	//calculeaza pretul/zi in functie de tipul de client si ce zi este; 0->duminica, 1->luni etc.
-	//tip: 1->0%, 2->20%, 3->50% reduceri
-	int pret = M.PretZi(nr_zi_saptamana);
-	int tip_client;
-	tip_client = C.Tip();
-	if (tip_client == 1)
-		return pret;
-	else if (tip_client == 2)
-		return ceil(pret - pret * 0.2);
+	//tip: 1->0% reducere, 2->20% reducere, 3->50% reducere
+	int price = M.PretZi(day_week);
+	int type_client;
+	type_client = C.Tip();
+	if (type_client == 1)
+		return price;
+	else if (type_client == 2)
+		return ceil(price- price * 0.2);
 	else  //tip 3
-		return ceil(pret - pret * 0.5);
+		return ceil(price - price * 0.5);
 
 }
 
 bool ButtonTour() {
+	//prima fereastra
 	Mat frame = Mat(Size(650, 150), CV_8UC3);
 	cvui::init("Welcome!", 10);
 	while (true) {
@@ -123,7 +126,19 @@ int CurrentDay() {
 	return timeinfo->tm_wday;
 
 }
+void CloseRoom(int number)
+{
+	auto M=muzeu::get_museum();
+	cout<<"Room number "<<number<<": ";
+	M->InchideSala(number);
 
+}
+void OpenRoom(int number)
+{
+	auto M=muzeu::get_museum();
+	M->DeschideSala(number);
+
+}
 int main() {
 	client_VIP cv;
 	auto M=muzeu::get_museum();
@@ -133,8 +148,9 @@ int main() {
 	M->ReadRoomsData();
 	ReadStaffData(*M);
 	M->Despre();
-	M->InchideSala(1);
-	M->DeschideSala(1);
+
+	CloseRoom(1);
+	//OpenRoom(1);
 
 	//incepe tur sau nu
 	bool command = ButtonTour();
@@ -169,9 +185,9 @@ int main() {
 	destroyAllWindows();
 	if (command) {
 		cout << "\nPlease enter your first and last name: ";
-		string nume, prenume, ans;
+		string lastname, firstname, ans;
 		int value;
-		cin >> nume >> prenume;
+		cin >> lastname >> firstname;
 		cout << "\nWould you like to donate money? (yes or no)\n";
 		cin >> ans;
 		if (ans == "yes") {
@@ -195,7 +211,7 @@ int main() {
 				catch (const invalid_argument &err) { cout << err.what(); }
 
 			}
-			client_VIP::DoneazaArta(room_no-1, "Donation-" + nume + "-"+ prenume, CurrentDate(),
+			client_VIP::DoneazaArta(room_no-1, "Donation-" + lastname + "-"+ firstname, CurrentDate(),
 			               *M); //trebuie adaugata imagine in photos pentru fiecare donatie; room_no-1 ptc clientul foloseste indexare de la 1
 			cout << "\nThe next step is to send the piece of art to our museum address.\nThank you!\n";
 		}

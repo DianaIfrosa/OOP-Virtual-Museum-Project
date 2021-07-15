@@ -1,8 +1,8 @@
 #ifndef LABORATOR_POO_MUZEU_H
 #define LABORATOR_POO_MUZEU_H
-#include "SalaMuzeu.h"
-#include "MagazinSuveniruri.h"
-#include "sala.h"
+#include "MuseumRoom.h"
+#include "SouvenirShop.h"
+#include "room.h"
 #include <vector>
 #include <string>
 #include <memory>
@@ -30,7 +30,7 @@ private:
 protected:
 	int nr_sali;
 	//vector de pointeri la clasa de baza (sala); pe ultima pozitie e intotdeauna magazinul de suveniruri
-	std:: vector< sala*> S;
+	std:: vector< room*> S;
 
 public:
 
