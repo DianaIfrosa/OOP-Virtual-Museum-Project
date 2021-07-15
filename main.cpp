@@ -150,7 +150,7 @@ int main() {
 	M->Info();
 
 	CloseRoom(1);
-	//OpenRoom(1);
+	OpenRoom(1);
 
 	//incepe tur sau nu
 	bool command = ButtonTour();

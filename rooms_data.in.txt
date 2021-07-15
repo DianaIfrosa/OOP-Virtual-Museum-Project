@@ -1,18 +1,18 @@
 CashDesk 0
 Paintings 1
-ArchitecturalModels 1
+VintageDolls 1
 Sculptures 2
-VintageFashion 2
+VintageObjects 2
 Feedback-Exit 1
 1 Painting1 10-09-2003 3000
 1 Painting2 04-08-2010 59000
 1 Painting3 01-12-2006 7600
-2 Model1 12-01-1999 900
+2 VintageDoll 12-01-1999 900
 3 Sculpture1 09-05-2005 7000
 3 Sculpture2 02-05-2003 6000
-4 VintageDress 08-06-1999 79000
-4 RoyalDress 09-07-1999 430000
-4 ManCostume 02-09-1998 56000
+4 VintageVehicle 08-06-1999 79000
+4 Armor 09-07-1820 990000
+4 OldVase 02-09-1998 56000
 0 Hall - 0
 5 ExitHall - 0
 1 Donation-A-B 20-05-2021 0
