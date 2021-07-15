@@ -4,16 +4,16 @@
 #include <iostream>
 using namespace std;
 
- void client_VIP::DoneazaArta(int nrsala, const string& nume, const string& data, muzeu &Muz) {
+ void client_VIP::DonateArt(int no_room, const string& name, const string& date, museum &Mus) {
 
 	ofstream fout("rooms_data.in.txt", ios::app);
-	fout<<nrsala<<" "<<nume<<" "<<data<<" "<<0<<"\n";
-	Muz.AdaugaExponat(nrsala,nume,data,0);
+	fout<<no_room<<" "<<name<<" "<<date<<" "<<0<<"\n";
+	Mus.AddExhibit(no_room,name,date,0);
 	cout<<"Thank you for your donation!\n";
 
 }
-void client_VIP::DoneazaBani(muzeu &Muz, int val) {
+void client_VIP::DonateMoney(museum &Mus, int val) {
 
-	Muz.PrimesteDonatii(val);
+	Mus.ReceiveDonations(val);
 
 }

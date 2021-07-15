@@ -11,7 +11,7 @@ find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 
-add_executable(Laborator-POO main.cpp MuseumRoom.cpp muzeu.cpp client.cpp MuseumRoom.h muzeu.h client.h  cvui.h client_VIP.cpp client_VIP.h SouvenirShop.cpp SouvenirShop.h room.cpp room.h)
+add_executable(Laborator-POO main.cpp MuseumRoom.cpp museum.cpp client.cpp MuseumRoom.h museum.h client.h  cvui.h client_VIP.cpp client_VIP.h SouvenirShop.cpp SouvenirShop.h room.cpp room.h)
 
 # add libs you need
 set(OpenCV_LIBS opencv_core opencv_imgproc opencv_highgui opencv_imgcodecs)

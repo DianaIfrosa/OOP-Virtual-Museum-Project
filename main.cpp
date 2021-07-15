@@ -6,7 +6,7 @@
 #include <sstream>
 #include <ctime> //current date
 #include <iomanip>
-#include "muzeu.h"
+#include "museum.h"
 #include "client.h"
 #include "client_VIP.h"
 
@@ -24,12 +24,12 @@ const int v2 = 49;
 using namespace std;
 using namespace cv;
 
-void ReadMuseumData(muzeu &M) {
+void ReadMuseumData(museum &M) {
 	ifstream fin("museum_data.in.txt");
 	fin >> M; //citeste date despre muzeu - overloaded operator
 }
 
-void ReadStaffData(muzeu &M) {
+void ReadStaffData(museum &M) {
 
 	ifstream fin("staff_data.in.txt");
 	string department, name;
@@ -38,7 +38,7 @@ void ReadStaffData(muzeu &M) {
 	//fiecare departament
 	for (int i = 0; i < number_dep; i++) {
 		fin >> department;
-		M.AdaugaDepartament(department);
+		M.AddDepartment(department);
 	}
 
 	fin >> number_staff;
@@ -46,19 +46,19 @@ void ReadStaffData(muzeu &M) {
 	for (int i = 0; i < number_staff; i++) {
 		fin >> department;
 		getline(fin, name);
-		M.AdaugaPersonal(department, name);
+		M.AddStaff(department, name);
 	}
 
 	//M.AfiseazaPersonal();
 
 }
 
-int Price(muzeu& M, const client_VIP &C, int day_week) {
+int Price(museum& M, const client_VIP &C, int day_week) {
 	//calculeaza pretul/zi in functie de tipul de client si ce zi este; 0->duminica, 1->luni etc.
 	//tip: 1->0% reducere, 2->20% reducere, 3->50% reducere
-	int price = M.PretZi(day_week);
+	int price = M.PricePerDay(day_week);
 	int type_client;
-	type_client = C.Tip();
+	type_client = C.Type();
 	if (type_client == 1)
 		return price;
 	else if (type_client == 2)
@@ -128,26 +128,26 @@ int CurrentDay() {
 }
 void CloseRoom(int number)
 {
-	auto M=muzeu::get_museum();
+	auto M=museum::get_museum();
 	cout<<"Room number "<<number<<": ";
-	M->InchideSala(number);
+	M->CloseCertainRoom(number);
 
 }
 void OpenRoom(int number)
 {
-	auto M=muzeu::get_museum();
-	M->DeschideSala(number);
+	auto M=museum::get_museum();
+	M->OpenCertainRoom(number);
 
 }
 int main() {
 	client_VIP cv;
-	auto M=muzeu::get_museum();
+	auto M=museum::get_museum();
 
 	//citiri din fisiere
 	ReadMuseumData(*M);
 	M->ReadRoomsData();
 	ReadStaffData(*M);
-	M->Despre();
+	M->Info();
 
 	CloseRoom(1);
 	//OpenRoom(1);
@@ -187,31 +187,31 @@ int main() {
 		cout << "\nPlease enter your first and last name: ";
 		string lastname, firstname, ans;
 		int value;
-		cin >> lastname >> firstname;
+		cin >> firstname >> lastname;
 		cout << "\nWould you like to donate money? (yes or no)\n";
 		cin >> ans;
 		if (ans == "yes") {
 			cout << "Please type the value: ";
 			cin >> value;
-			client_VIP::DoneazaBani(*M, value);
+			client_VIP::DonateMoney(*M, value);
 			cout << "\nThank you!\n";
 		}
 		cout << "\nWould you like to donate art? (yes or no)\n";
 		cin >> ans;
 		if (ans == "yes") {
-			cout << "Please type the room number you would like to donate to (a number from 1 to "+to_string(M->NrSali())+")\n";
+			cout << "Please type the room number you would like to donate to (a number from 1 to "+to_string(M->NoRooms())+")\n";
 			int room_no;
 			while (true) {
 				cin >> room_no;
 				try {
-					if (room_no<=0 || room_no>M->NrSali())
-						throw invalid_argument("Invalid museum room number! Please type a number from 1 to "+to_string(M->NrSali())+"\n");
+					if (room_no<=0 || room_no>M->NoRooms())
+						throw invalid_argument("Invalid museum room number! Please type a number from 1 to "+to_string(M->NoRooms())+"\n");
 					break;
 				}
 				catch (const invalid_argument &err) { cout << err.what(); }
 
 			}
-			client_VIP::DoneazaArta(room_no-1, "Donation-" + lastname + "-"+ firstname, CurrentDate(),
+			client_VIP::DonateArt(room_no-1, "Donation-" + lastname + "-"+ firstname, CurrentDate(),
 			               *M); //trebuie adaugata imagine in photos pentru fiecare donatie; room_no-1 ptc clientul foloseste indexare de la 1
 			cout << "\nThe next step is to send the piece of art to our museum address.\nThank you!\n";
 		}

@@ -5,31 +5,31 @@
 
 using namespace std;
 
-int client::Tip() const {
-	if (tip == "adult")
+int client::Type() const {
+	if (type == "adult")
 		return 1;
-	else if (tip == "student")
+	else if (type == "student")
 		return 2;
 	else return 3; //child
 }
 
 client::client(string nume, string prenume, string tip) {
 	//constructor
-	this->nume = nume;
-	this->prenume = prenume;
-	this->tip = tip;
+	this->lastname = nume;
+	this->firstname = prenume;
+	this->type = tip;
 
 }
 
 ostream &operator<<(ostream &out, const client &C) {
-	out << "Name of client: " << C.nume << " " << C.prenume << ". Category: " << C.tip << "\n";
+	out << "Name of client: " << C.lastname << " " << C.firstname << ". Category: " << C.type << "\n";
 	return out;
 }
 
 istream &operator>>(istream &in, client &C) {
 	string category;
 	cout << "Please enter your first and last name: ";
-	in >> C.nume >> C.prenume;
+	in >> C.firstname >> C.lastname;
 	cout << "Please enter your category (adult, student, child):";
 	while (true) {
 		in >> category;
@@ -41,7 +41,7 @@ istream &operator>>(istream &in, client &C) {
 		catch (const invalid_argument &err) { cout << err.what(); }
 
 	}
-	C.tip = category;
+	C.type = category;
 	return in;
 
 }
@@ -62,7 +62,7 @@ void client::Feedback() {
 
 	}
 	cout << "Thank you!\n";
-	fout << nume + " " + prenume << " " << nota << "\n";
+	fout << lastname + " " + firstname << " " << nota << "\n";
 
 }
 
