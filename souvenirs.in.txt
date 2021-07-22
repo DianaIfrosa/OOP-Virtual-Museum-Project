@@ -1,4 +1,6 @@
-A 5
-B 10
-C 23
-D 12
+Mug 5
+T-shirt 10.50
+Socks 7.99
+CeramicCat 12
+Bookmark1 4.99
+Bookmark2 4.99
