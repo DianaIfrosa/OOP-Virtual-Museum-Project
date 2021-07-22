@@ -17,8 +17,8 @@
 
 #include "cvui.h"
 
-const int v0 = 49;
-const int v1 = 52;
+const int v0 = 89;
+const int v1 = 45;
 const int v2 = 49;
 
 using namespace std;
@@ -126,6 +126,7 @@ int CurrentDay() {
 	return timeinfo->tm_wday;
 
 }
+
 void CloseRoom(int number)
 {
 	auto M=museum::get_museum();
@@ -133,6 +134,7 @@ void CloseRoom(int number)
 	M->CloseCertainRoom(number);
 
 }
+
 void OpenRoom(int number)
 {
 	auto M=museum::get_museum();
@@ -146,6 +148,7 @@ int main() {
 	//citiri din fisiere
 	ReadMuseumData(*M);
 	M->ReadRoomsData();
+
 	ReadStaffData(*M);
 	M->Info();
 
@@ -216,32 +219,7 @@ int main() {
 			cout << "\nThe next step is to send the piece of art to our museum address.\nThank you!\n";
 		}
 
-
 	}
-
-//-------------------de actualizat
-	///Metode disponibile si relevante pentru obiectul din clasa muzeu (celelalte se apeleaza in cadrul turului):
-//    void AdaugaPersonal(string departament,string nume);
-//    void AfiseazaPersonal();
-//    void AdaugaDepartament(string departament);
-//    void StartTour(SalaMuzeu S[]);
-//    void FeedbackScore(); //afiseaza feedback score bazat pe fisierul in care se retin
-//    notele (si numele/prenumele) date de utilizator (client)
-
-	///Metode disponibile si relevante pentru obiectul din clasa SalaMuzeu
-//    void AdaugaExponat(string nume_exponate, string data_aducerii, int pret);
-//    void DeschideSala();
-//    void InchideSala(); //are consecinte la "rularea" turului-> va afisa o atentionare cu camera-inchisa
-//    bool Stare(); //afla disponibilitatea unei camere
-
-	///Adaugarea unui exponat se poate face manual cu metoda de mai sus (si scriind ulterior datele tot manual in rooms_data.in.txt), fie
-	///adaugand direct datele (nr_sala nume_exponat data_aducerii pret_cumparare) in fisierul rooms_data.in.txt
-	///iar mai apoi prin apelarea  M.ReadRoomsData(); O alta metoda este prin donatii.
-
-	///Metode disponibile si relevante pentru obiectul din clasa client
-//  void Feedback(); //ofera feedback la finalul turului, care va fi luat in calcul la feedback score al muzeului
-//  int Tip(); //se poate afla din ce categorie face parte (student, adult, child)
-
 
 	return 0;
 
